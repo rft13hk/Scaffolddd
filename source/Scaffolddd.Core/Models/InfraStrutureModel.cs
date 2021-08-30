@@ -4,6 +4,8 @@ namespace Scaffolddd.Core.Models
     {
         public string ProjectName { get; set; }
         public string NameSpace { get; set; }
+
+        public string NameDbContext { get; set; }
         public string PathForModels { get; set; }
         public string PathForDbContext { get; set; }
         public string PathForRepositories { get; set; }

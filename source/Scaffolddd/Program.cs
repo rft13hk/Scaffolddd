@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Scaffolddd.Core;
 using Scaffolddd.Core.Helpers;
 using Scaffolddd.Core.Models;
 
@@ -13,12 +14,15 @@ namespace Scaffolddd
         {
             Console.WriteLine("Scaffolddd process starting...");
 
+            #region  Configuração inicial
             var conf = new ScaffoldddModel();
 
             conf.ProjectName = "DtmSysAdmin";
+            
 
             conf.InfraStructure.ProjectName = "DtmSysAdmin.Infrastructure.Data";
             conf.InfraStructure.NameSpace = "DtmSysAdmin.Infrastructure.Data";
+            conf.InfraStructure.NameDbContext = "DtmSysAdminContext";
             
             conf.InfraStructure.PathForDbContext = @"/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data/DbContexts";
             conf.InfraStructure.PathForModels = @"/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data/Models";
@@ -37,61 +41,19 @@ namespace Scaffolddd
             conf.Application.PathForInjectionMapping = @"";
             conf.Application.PathForDTO = @"";
 
-            //Roteiro:
-
-            #region Passo 1:
-            /*
-                - Ler todos os nomes de arquivos que estao na pasta dos Models na infrastructure;
-            */
-
-            var lstFilesModels = FileUtils.ProcessDirectory(conf.InfraStructure.PathForModels);
-            var lstNameModels = new List<string>();
-
-            lstFilesModels.ForEach( f => lstNameModels.Add(FileUtils.ExtractNameFromPath(f).Replace(".cs","")));
-
             #endregion
 
+            //Roteiro:
 
             
+            var processo = new Process(conf);
+            
+            //processo.ProcessEntities(false);
+            //processo.ProcessDtos(false);
 
-            // Open firt file
-            var file = lstFilesModels[0];
+            //processo.ProcessInterfaces(false);
 
-            StringBuilder sb = new StringBuilder();
-
-            var filePath = file;//String.Concat(conf.InfraStructure.PathForModels,@"/", file);
-
-            Console.WriteLine("");
-            Console.WriteLine(filePath);
-            Console.WriteLine(FileUtils.ExtractNameFromPath(filePath));
-
-
-            if (File.Exists(filePath))
-            {
-                string readText = File.ReadAllText(filePath);
-                Console.WriteLine(readText);
-
-                var dicSwap = new Dictionary<string,string>();
-
-                lstNameModels.ForEach(f => dicSwap.Add(f,string.Concat(f,"Entity")));
-
-                foreach (var item in dicSwap)
-                {
-                    Console.WriteLine("De[{0}] -> [{1}]", item.Key, item.Value);    
-                }
-
-
-                
-
-                Console.WriteLine(new string('-',50));
-
-                var newtext = StringUtils.Replace(readText,dicSwap);
-
-                Console.WriteLine(newtext);
-
-            }
-
-
+            Console.WriteLine(processo.GetTemplate());
 
 
         }
