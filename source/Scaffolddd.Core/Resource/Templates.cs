@@ -172,8 +172,8 @@ namespace Scaffolddd.Core.Resource
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Threading.Tasks;");
+            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace+".Entities;"));
             sb.AppendLine();
-            sb.AppendLine(conf.Domain.NameSpace+".Entities;");
 
             sb.AppendLine(string.Concat("namespace ",conf.Domain.NameSpace,".Interfaces.Repositories"));
             sb.AppendLine(@"{");

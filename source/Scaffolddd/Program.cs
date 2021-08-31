@@ -48,25 +48,15 @@ namespace Scaffolddd
 
             #endregion
 
-            //Roteiro:
-
             
             var processo = new Process(conf);
             
-            
 
-            Console.WriteLine(path);
+            //Console.WriteLine(path);
 
             processo.Start();
 
-
-            //processo.ProcessEntities(false);
-            //processo.ProcessDtos(false);
-
-            //processo.ProcessInterfaces(false);
-
-            //Console.WriteLine(processo.GetTemplate());
-
+            Console.WriteLine("Process completed successfully");
 
         }
     }
