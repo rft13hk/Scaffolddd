@@ -125,7 +125,12 @@ namespace Scaffolddd.Core
             {
                 var newtext = readText.Replace("[[CLASS]]",item);
 
-                Console.WriteLine(newtext);
+                var pathFile = string.Concat(_conf.InfraStructure.PathForRepositories, "/", item,"Repository.cs1"); 
+
+                if (!File.Exists(pathFile))
+                {
+                    File.WriteAllText(pathFile,newtext);
+                }
             }
         }
 
@@ -207,9 +212,9 @@ namespace Scaffolddd.Core
             //Passo 4 - Criar as Interfaces dos Repositorios
             ProcessInterfaces(true);
 
-            #region Passo 5 - Criar os Repositorios
+            //Passo 5 - Criar os Repositorios
+            ProcessRepositories(true);
             
-            #endregion
         }
     }
 }
