@@ -49,7 +49,7 @@ namespace Scaffolddd.Core
             _lstNameModels.ForEach(f => _dicSwapRepository .Add(f,string.Concat(f,"Repository")));
         }
 
-        public void ProcessEntities(bool onlyNotFound)
+        private void ProcessEntities(bool onlyNotFound)
         {
             foreach (var item in _lstFilesModels)
             {
@@ -57,21 +57,24 @@ namespace Scaffolddd.Core
                 {
                     string readText = File.ReadAllText(item);
                     
-                    Console.WriteLine(new string('>',50));
-                    Console.WriteLine(readText);
-
-                    Console.WriteLine(new string('<',50));
-
                     var newtext = StringUtils.Replace(readText,_dicSwapEntity);
+                    newtext = newtext.Replace(string.Concat(_conf.InfraStructure.NameSpace,".Models") 
+                        , string.Concat(_conf.Domain.NameSpace,".Entities") );
 
-                    Console.WriteLine(newtext);
+                    var entity = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
 
+                    var pathFile = string.Concat(_conf.Domain.PathForEntities, "/", entity,"Entity.cs1"); 
+
+                    if (!File.Exists(pathFile))
+                    {
+                        File.WriteAllText(pathFile,newtext);
+                    }
                 }
                 
             }
         }
 
-        public void ProcessDtos(bool onlyNotFound)
+        private void ProcessDtos(bool onlyNotFound)
         {
             foreach (var item in _lstFilesModels)
             {
@@ -93,7 +96,7 @@ namespace Scaffolddd.Core
             }
         }
 
-        public void ProcessInterfaces(bool onlyNotFound)
+        private void ProcessInterfaces(bool onlyNotFound)
         {
             var readText = Templates.GetTextForInterfaces(_conf,tab);
 
@@ -105,7 +108,7 @@ namespace Scaffolddd.Core
             }
         }
 
-        public void ProcessRepositories(bool onlyNotFound)
+        private void ProcessRepositories(bool onlyNotFound)
         {
             var readText = Templates.GetTextForBaseRepository(_conf,tab);
 
@@ -122,5 +125,114 @@ namespace Scaffolddd.Core
             return Templates.GetTextForRepository(_conf,tab,"Abacaxi");
         }
 
+
+        public void Start()
+        {
+            #region Passo 1 - Criar as Classes e Interfaces Base caso as mesmas nao existao: IUnitOfWork, UnitOfWork, IBaseRepository, BaseRepositori
+
+            #region IUnitOfWork, UnitOfWork
+            string pathFile = string.Concat(_conf.InfraStructure.PathForDbContext, "/UnitOfWork.cs1"); 
+
+            if (!File.Exists(pathFile))
+            {
+                var template = Templates.GetTextForUnitOfWork(_conf,tab);
+
+                // Gravar arquivo...
+                File.WriteAllText(pathFile,template);
+            }
+
+            pathFile = string.Concat(_conf.Domain.PathForInterfaces, "/Infrastructure/IUnitOfWork.cs1"); 
+
+            if (!File.Exists(pathFile))
+            {
+                var template = Templates.GetTextForUnitOfWork(_conf,tab);
+
+                // Gravar arquivo...
+                File.WriteAllText(pathFile,template);
+            }
+
+            pathFile = string.Concat(_conf.Domain.PathForInterfaces, "/Infrastructure/IUnitOfWork.cs1"); 
+
+            if (!File.Exists(pathFile))
+            {
+                var template = Templates.GetTextForUnitOfWork(_conf,tab);
+
+                // Gravar arquivo...
+                File.WriteAllText(pathFile,template);
+            }
+
+            #endregion
+
+            #region IBaseRepository, BaseRepository
+
+            pathFile = string.Concat(_conf.Domain.PathForInterfaces, "/Repositories/IBaseRepository.cs1"); 
+
+            if (!File.Exists(pathFile))
+            {
+                var template = Templates.GetTextForIBaseRepository(_conf,tab);
+
+                // Gravar arquivo...
+                File.WriteAllText(pathFile,template);
+            }
+
+            pathFile = string.Concat(_conf.InfraStructure.PathForRepositories, "/BaseRepository.cs1"); 
+
+            if (!File.Exists(pathFile))
+            {
+                var template = Templates.GetTextForBaseRepository(_conf,tab);
+
+                // Gravar arquivo...
+                File.WriteAllText(pathFile,template);
+            }
+
+            #endregion
+
+            #endregion
+
+            #region Passo 2 - Criar as Entidades
+
+            ProcessEntities(true);
+
+            foreach (var item in _dicSwapEntity)
+            {
+                
+                pathFile = string.Concat(_conf.Domain.PathForEntities, "/", item.Value,".cs1"); 
+
+
+
+                if (!File.Exists(pathFile))
+                {
+                    //var template = Templates.GetTextFor(_conf,tab,item.Key);
+                    
+                    Console.WriteLine(new string('-',50));
+                    //Console.WriteLine(template);
+
+
+                }
+
+                /*
+                pathFile = string.Concat(_conf.InfraStructure.PathForRepositories, "/BaseRepository.cs1"); 
+
+                if (!File.Exists(pathFile))
+                {
+                    var template = Templates.GetTextForBaseRepository(_conf,tab);
+
+                    // Gravar arquivo...
+                    File.WriteAllText(pathFile,template);
+                }                
+                */
+            }
+
+            #endregion
+
+            #region Passo 3 - Criar os DTOs
+            #endregion
+
+            #region Passo 4 - Criar as Interfaces dos Repositorios
+            #endregion
+
+            #region Passo 5 - Criar os Repositorios
+            #endregion
+        }
     }
 }
