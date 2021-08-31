@@ -39,12 +39,12 @@ namespace Scaffolddd
             conf.Domain.PathForEntities = @"/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain/Entities";
             conf.Domain.PathForInterfaces = @"/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain/Interfaces";
 
-            conf.Application.ProjectName = "";
-            conf.Application.NameSpace = "";
+            conf.Application.ProjectName = "DtmSysAdmin.WebApi";
+            conf.Application.NameSpace = "DtmSysAdmin.WebApi";
 
             conf.Application.PathForMappingProfile = @"";
             conf.Application.PathForInjectionMapping = @"";
-            conf.Application.PathForDTO = @"";
+            conf.Application.PathForDTO = @"/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi/DTOs";
 
             #endregion
 

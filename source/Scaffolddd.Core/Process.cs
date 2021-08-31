@@ -82,15 +82,19 @@ namespace Scaffolddd.Core
                 {
                     string readText = File.ReadAllText(item);
                     
-                    Console.WriteLine(new string('>',50));
-                    Console.WriteLine(readText);
-
-                    Console.WriteLine(new string('<',50));
-
                     var newtext = StringUtils.Replace(readText,_dicSwapDto);
 
-                    Console.WriteLine(newtext);
+                    newtext = newtext.Replace(string.Concat(_conf.InfraStructure.NameSpace,".Models") 
+                        , string.Concat(_conf.Application.NameSpace,".DTOs") );
 
+                    var dto = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
+
+                    var pathFile = string.Concat(_conf.Application.PathForDTO, "/", dto,"Dto.cs1"); 
+
+                    if (!File.Exists(pathFile))
+                    {
+                        File.WriteAllText(pathFile,newtext);
+                    }
                 }
                 
             }
@@ -193,35 +197,7 @@ namespace Scaffolddd.Core
 
             ProcessEntities(true);
 
-            foreach (var item in _dicSwapEntity)
-            {
-                
-                pathFile = string.Concat(_conf.Domain.PathForEntities, "/", item.Value,".cs1"); 
-
-
-
-                if (!File.Exists(pathFile))
-                {
-                    //var template = Templates.GetTextFor(_conf,tab,item.Key);
-                    
-                    Console.WriteLine(new string('-',50));
-                    //Console.WriteLine(template);
-
-
-                }
-
-                /*
-                pathFile = string.Concat(_conf.InfraStructure.PathForRepositories, "/BaseRepository.cs1"); 
-
-                if (!File.Exists(pathFile))
-                {
-                    var template = Templates.GetTextForBaseRepository(_conf,tab);
-
-                    // Gravar arquivo...
-                    File.WriteAllText(pathFile,template);
-                }                
-                */
-            }
+            ProcessDtos(true);
 
             #endregion
 
