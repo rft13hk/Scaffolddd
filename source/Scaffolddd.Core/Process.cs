@@ -47,6 +47,26 @@ namespace Scaffolddd.Core
             _lstNameModels.ForEach(f => _dicSwapRepository .Add(f,string.Concat(f,"Repository")));
         }
 
+        private void WriteFile(string text, string pathFile)
+        {
+            var fileExist = File.Exists(pathFile);
+
+            if (_conf.BackupOld && fileExist && _conf.OverWrite)
+            {
+                File.Copy(pathFile, string.Concat(pathFile,"_bk_",DateTime.Now.ToString("yyyyMMdd-HHmmss") ),true);
+            }
+
+            if (fileExist && _conf.OverWrite)
+            {
+                File.Delete(pathFile);
+            }
+
+            if (!File.Exists(pathFile))
+            {
+                File.WriteAllText(pathFile,text);
+            }
+        }
+
         private void ProcessEntities(bool onlyNotFound)
         {
             foreach (var item in _lstFilesModels)
@@ -62,12 +82,9 @@ namespace Scaffolddd.Core
 
                     var entity = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
 
-                    var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Entities), "/", entity,"Entity.cs1"); 
+                    var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Entities), "/", entity,"Entity.cs"); 
 
-                    if (!File.Exists(pathFile))
-                    {
-                        File.WriteAllText(pathFile,newtext);
-                    }
+                    WriteFile(newtext,pathFile);
                 }
                 
             }
@@ -88,12 +105,13 @@ namespace Scaffolddd.Core
 
                     var dto = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
 
-                    var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.DTO), "/", dto,"Dto.cs1"); 
+                    var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.DTO), "/", dto,"Dto.cs"); 
 
-                    if (!File.Exists(pathFile))
-                    {
-                        File.WriteAllText(pathFile,newtext);
-                    }
+                    WriteFile(newtext,pathFile);
+                    // if (!File.Exists(pathFile))
+                    // {
+                    //     File.WriteAllText(pathFile,newtext);
+                    // }
                 }
                 
             }
@@ -107,12 +125,13 @@ namespace Scaffolddd.Core
             {
                 var newtext = readText.Replace("[[CLASS]]",item);
 
-                var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Repositories), "/I", item,"Repository.cs1"); 
+                var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Repositories), "/I", item,"Repository.cs"); 
 
-                if (!File.Exists(pathFile))
-                {
-                    File.WriteAllText(pathFile,newtext);
-                }
+                WriteFile(newtext,pathFile);
+                // if (!File.Exists(pathFile))
+                // {
+                //     File.WriteAllText(pathFile,newtext);
+                // }
             }
         }
 
@@ -124,12 +143,13 @@ namespace Scaffolddd.Core
             {
                 var newtext = readText.Replace("[[CLASS]]",item);
 
-                var pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories), "/", item,"Repository.cs1"); 
+                var pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories), "/", item,"Repository.cs"); 
 
-                if (!File.Exists(pathFile))
-                {
-                    File.WriteAllText(pathFile,newtext);
-                }
+                WriteFile(newtext,pathFile);
+                // if (!File.Exists(pathFile))
+                // {
+                //     File.WriteAllText(pathFile,newtext);
+                // }
             }
         }
 
@@ -137,12 +157,13 @@ namespace Scaffolddd.Core
         {
             var newtext = Templates.GetTextForMapping(_conf,tab,_dicSwapDto, _dicSwapEntity);
 
-            var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs1");
+            var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs");
 
-            if (!File.Exists(pathFile))
-            {
-                File.WriteAllText(pathFile,newtext);
-            }
+            WriteFile(newtext,pathFile);
+            // if (!File.Exists(pathFile))
+            // {
+            //     File.WriteAllText(pathFile,newtext);
+            // }
 
 
         }
@@ -154,12 +175,13 @@ namespace Scaffolddd.Core
 
             var newtext = Templates.GetTextForDependencyInjectionMapping(_conf,tab,_dicSwapDto, _dicSwapEntity);
 
-            var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs1");
+            var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs");
 
-            if (!File.Exists(pathFile))
-            {
-                File.WriteAllText(pathFile,newtext);
-            }
+            WriteFile(newtext,pathFile);
+            // if (!File.Exists(pathFile))
+            // {
+            //     File.WriteAllText(pathFile,newtext);
+            // }
 
         }
 
@@ -180,50 +202,55 @@ namespace Scaffolddd.Core
 
             #region IUnitOfWork, UnitOfWork
 
-            string pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs1"); 
+            string pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs"); 
 
-            if (!File.Exists(pathFile))
-            {
+            //if (!File.Exists(pathFile))
+            //{
                 var template = Templates.GetTextForIUnitOfWork(_conf,tab);
 
                 // Gravar arquivo...
-                File.WriteAllText(pathFile,template);
-            }
+                //File.WriteAllText(pathFile,template);
+                WriteFile(template,pathFile);
+            //}
 
-            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath( _conf.InfraStructure.Paths.DbContext), "/UnitOfWork.cs1"); 
 
-            if (!File.Exists(pathFile))
-            {
-                var template = Templates.GetTextForUnitOfWork(_conf,tab);
+            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath( _conf.InfraStructure.Paths.DbContext), "/UnitOfWork.cs"); 
+
+            //if (!File.Exists(pathFile))
+            //{
+                template = Templates.GetTextForUnitOfWork(_conf,tab);
 
                 // Gravar arquivo...
-                File.WriteAllText(pathFile,template);
-            }
+                //File.WriteAllText(pathFile,template);
+                WriteFile(template,pathFile);
+            //}
 
 
             #endregion
 
             #region IBaseRepository, BaseRepository
 
-            pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Repositories), "/IBaseRepository.cs1"); 
+            pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Repositories), "/IBaseRepository.cs"); 
 
-            if (!File.Exists(pathFile))
-            {
-                var template = Templates.GetTextForIBaseRepository(_conf,tab);
-
-                // Gravar arquivo...
-                File.WriteAllText(pathFile,template);
-            }
-
-            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories) , "/BaseRepository.cs1"); 
-
-            if (!File.Exists(pathFile))
-            {
-                var template = Templates.GetTextForBaseRepository(_conf,tab);
+            //if (!File.Exists(pathFile))
+            //{
+                template = Templates.GetTextForIBaseRepository(_conf,tab);
 
                 // Gravar arquivo...
-                File.WriteAllText(pathFile,template);
-            }
+                //File.WriteAllText(pathFile,template);
+                WriteFile(template,pathFile);
+            //}
+
+            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories) , "/BaseRepository.cs"); 
+
+            //if (!File.Exists(pathFile))
+            //{
+                template = Templates.GetTextForBaseRepository(_conf,tab);
+
+                // Gravar arquivo...
+                //File.WriteAllText(pathFile,template);
+                WriteFile(template,pathFile);
+            //}
 
             #endregion
 

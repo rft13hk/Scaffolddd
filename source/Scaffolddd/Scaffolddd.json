@@ -1,6 +1,6 @@
 {
     "ProjectName": "DtmSysAdmin",
-    "OverWrite": false,
+    "OverWrite": true,
     "BackupOld": true,
     "Application": {
         "Paths": {
