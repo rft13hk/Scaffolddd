@@ -9,7 +9,7 @@ namespace Scaffolddd.Core.Resource
         internal static string GetTextForIUnitOfWork(ScaffoldddModel conf , string tab)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(string.Concat("namespace ", conf.Domain.NameSpace, "Interfaces.Infrastructure"));
+            sb.AppendLine(string.Concat("namespace ", conf.Domain.NameSpace, ".Interfaces.Infrastructure"));
             sb.AppendLine(@"{");
 
             sb.AppendLine(string.Concat(tab, "public interface IUnitOfWork"));
@@ -179,7 +179,7 @@ namespace Scaffolddd.Core.Resource
             sb.AppendLine(string.Concat("namespace ",conf.Domain.NameSpace,".Interfaces.Repositories"));
             sb.AppendLine(@"{");
 
-            sb.AppendLine(string.Concat(tab,"public interface I","[[CLASS]]",": IBaseRepository<[[CLASS]]Entity>"));
+            sb.AppendLine(string.Concat(tab,"public interface I","[[CLASS]]Repository",": IBaseRepository<[[CLASS]]Entity>"));
             sb.AppendLine(string.Concat(tab,"{"));
             sb.AppendLine();
             sb.AppendLine(string.Concat(tab,"}"));
@@ -195,9 +195,9 @@ namespace Scaffolddd.Core.Resource
             StringBuilder sb = new StringBuilder();
              
             sb.AppendLine(@"using AutoMapper;");
-            sb.AppendLine(string.Concat("using ",conf.Application.NameSpace,".DTOs"));
-            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace,".Entities"));
-            sb.AppendLine(string.Concat("using ",conf.InfraStructure.NameSpace,".Models"));
+            sb.AppendLine(string.Concat("using ",conf.Application.NameSpace,".DTOs;"));
+            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace,".Entities;"));
+            sb.AppendLine(string.Concat("using ",conf.InfraStructure.NameSpace,".Models;"));
             sb.AppendLine();
 
             sb.AppendLine(string.Concat("namespace ", conf.Application.NameSpace,".Implementation"));
@@ -308,9 +308,9 @@ namespace Scaffolddd.Core.Resource
              
             sb.AppendLine(@"using System.Threading.Tasks;");
             sb.AppendLine(@"using AutoMapper;");
-            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace,".Entities"));
-            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace,".Interfaces.Repositories"));
-            sb.AppendLine(string.Concat("using ",conf.InfraStructure.NameSpace,".DbContexts"));
+            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace,".Entities;"));
+            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace,".Interfaces.Repositories;"));
+            sb.AppendLine(string.Concat("using ",conf.InfraStructure.NameSpace,".DbContexts;"));
             sb.AppendLine();
 
             sb.AppendLine(string.Concat("namespace ",conf.InfraStructure.NameSpace,".Repositories"));
@@ -332,23 +332,23 @@ namespace Scaffolddd.Core.Resource
             sb.AppendLine(string.Concat(tab,tab, "}"));
             sb.AppendLine();
 
-            sb.AppendLine(string.Concat(tab,tab, "public Task<",entity,"Entity> GetByKey(",entity,"Entity entity)"));
+            sb.AppendLine(string.Concat(tab,tab, "public async Task<",entity,"Entity> GetByKey(",entity,"Entity entity)"));
             sb.AppendLine(string.Concat(tab,tab, "{"));
             sb.AppendLine(string.Concat(tab,tab,tab, "var retorno = await _context.",entity,".FindAsync(entity);"));
             sb.AppendLine(string.Concat(tab,tab,tab, "return _mapper.Map<",entity,"Entity>(retorno);"));
             sb.AppendLine(string.Concat(tab,tab, "}"));
             sb.AppendLine();
 
-            sb.AppendLine(string.Concat(tab,tab, "public Task<",entity,"Entity> Insert(",entity,"Entity entity)"));
+            sb.AppendLine(string.Concat(tab,tab, "public async Task<",entity,"Entity> Insert(",entity,"Entity entity)"));
             sb.AppendLine(string.Concat(tab,tab, "{"));
             sb.AppendLine(string.Concat(tab,tab,tab, "var retorno= await _context.",entity,".AddAsync(_mapper.Map<Models.",entity,">(entity));"));
             sb.AppendLine(string.Concat(tab,tab,tab, "return _mapper.Map<",entity,"Entity>(retorno);"));
             sb.AppendLine(string.Concat(tab,tab, "}"));
             sb.AppendLine();
 
-            sb.AppendLine(string.Concat(tab,tab, "public Task<",entity,"Entity> Update(",entity,"Entity entity)"));
+            sb.AppendLine(string.Concat(tab,tab, "public async Task<",entity,"Entity> Update(",entity,"Entity entity)"));
             sb.AppendLine(string.Concat(tab,tab, "{"));
-            sb.AppendLine(string.Concat(tab,tab,tab, "var entityFound = await _context.",entity,".FindAsync(entity.Uid);"));
+            sb.AppendLine(string.Concat(tab,tab,tab, "var entityFound = await _context.",entity,".FindAsync(entity);"));
 
             sb.AppendLine(string.Concat(tab,tab,tab, "_mapper.Map(entity,entityFound);"));
             sb.AppendLine(string.Concat(tab,tab,tab, "var retorno = _context.",entity,".Update(entityFound);"));

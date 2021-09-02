@@ -137,10 +137,10 @@ namespace Scaffolddd.Core
 
         private void ProcessRepositories(bool onlyNotFound)
         {
-            var readText = Templates.GetTextForBaseRepository(_conf,tab);
-
             foreach (var item in _lstNameModels)
             {
+                var readText = Templates.GetTextForRepository(_conf,tab,item);
+
                 var newtext = readText.Replace("[[CLASS]]",item);
 
                 var pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories), "/", item,"Repository.cs"); 
