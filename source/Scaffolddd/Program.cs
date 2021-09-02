@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using Scaffolddd.Core;
 using Scaffolddd.Core.Helpers;
 using Scaffolddd.Core.Models;
@@ -19,42 +20,58 @@ namespace Scaffolddd
 
             var runInLinux = (path.IndexOf(@"/") != -1);
 
-            #region  Configuração inicial
-            var conf = new ScaffoldddModel();
+            #region  Tamplate for start conf
 
-            conf.ProjectName = "DtmSysAdmin";
+            var confTemplate = new ScaffoldddModel();
 
-            conf.InfraStructure.ProjectName = "DtmSysAdmin.Infrastructure.Data";
-            conf.InfraStructure.NameSpace = "DtmSysAdmin.Infrastructure.Data";
-            conf.InfraStructure.NameDbContext = "DtmSysAdminContext";
-            
-            conf.InfraStructure.PathForDbContext =  @"/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data/DbContexts";
-            conf.InfraStructure.PathForModels = @"/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data/Models";
-            conf.InfraStructure.PathForRepositories = @"/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data/Repositories";
+            confTemplate.ProjectName = "<Name of your Project>";
+            confTemplate.BackupOld = true;
+            confTemplate.OverWrite = false;
 
+            confTemplate.InfraStructure.NameSpace = "<Namespace of project infrastructure>";
+            confTemplate.InfraStructure.NameDbContext = "<Name of DbContext File>";
+            confTemplate.InfraStructure.Paths.Project = @"<path of project>";
+            confTemplate.InfraStructure.Paths.DbContext =  @"<Diretory of DbContexts>";
+            confTemplate.InfraStructure.Paths.Models = @"<Diretory of Models>";
+            confTemplate.InfraStructure.Paths.Repositories = @"<Diretory of Repositories>";
 
-            conf.Domain.ProjectName = "DtmSysAdmin.Domain";
-            conf.Domain.NameSpace = "DtmSysAdmin.Domain";
+            confTemplate.Domain.NameSpace = "<Namespace of project Domain>";
+            confTemplate.Domain.Paths.Project = @"<Path of Project>";
 
-            conf.Domain.PathForEntities = @"/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain/Entities";
-            conf.Domain.PathForInterfaces = @"/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain/Interfaces";
+            confTemplate.Domain.Paths.Entities = @"<Path of Entities>";
+            confTemplate.Domain.Paths.Infrastructure = @"<Path of interfaces the Interfaces/Infrastructure>";
+            confTemplate.Domain.Paths.Repositories = @"<Path of interfaces the Interfaces/Repositories>";
+            confTemplate.Domain.Paths.Services = @"<Path of interfaces the Interfaces/Services>";
 
-            conf.Application.ProjectName = "DtmSysAdmin.WebApi";
-            conf.Application.NameSpace = "DtmSysAdmin.WebApi";
-
-            conf.Application.PathForMappingProfile = @"/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi/Implementation";
-            conf.Application.PathForInjectionMapping = @"/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi/Implementation";
-            conf.Application.PathForDTO = @"/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi/DTOs";
+            confTemplate.Application.NameSpace = "<Namespace of project Application>";
+            confTemplate.Application.Paths.Project = @"<path of project>";
+            confTemplate.Application.Paths.MappingProfile = @"<Directory of MappingProfile";
+            confTemplate.Application.Paths.InjectionMapping = @"<Directory of InjectionMapping>";
+            confTemplate.Application.Paths.DTO = @"<Directory of DTOs>";
 
             #endregion
 
-            
-            var processo = new Process(conf);
-            
+            var configurationFile = string.Concat(path,"/Scaffolddd.json");
 
-            //Console.WriteLine(path);
+            if (!File.Exists(configurationFile))
+            {
+                string json = JsonSerializer.Serialize(confTemplate);
+                File.WriteAllText(configurationFile, json);
+            }
 
-            processo.Start();
+            if (File.Exists(configurationFile))
+            {
+                var text = File.ReadAllText(configurationFile);
+
+                var conf = JsonSerializer.Deserialize<ScaffoldddModel>(text);
+
+                var processo = new Process(conf);
+            
+                processo.Start();
+
+            }
+
+            //Console.WriteLine(path); 
 
             Console.WriteLine("Process completed successfully");
 

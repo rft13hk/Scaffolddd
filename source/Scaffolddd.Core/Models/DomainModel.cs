@@ -1,13 +1,13 @@
 namespace Scaffolddd.Core.Models
 {
-    public class DomainModel
+    public class DomainModel: BaseModel
     {
-        public string ProjectName { get; set; }
-        public string NameSpace { get; set; }
-        public string PathForEntities { get; set; }
-        public string PathForInterfaces { get; set; }
-        
+        public DomainModel()
+        {
+            Paths = new DomainPathsModel();    
+        }
 
+        public DomainPathsModel Paths { get; set; }
 
     }
 }

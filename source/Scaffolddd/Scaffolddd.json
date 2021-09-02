@@ -1,0 +1,34 @@
+{
+    "ProjectName": "DtmSysAdmin",
+    "OverWrite": false,
+    "BackupOld": true,
+    "Application": {
+        "Paths": {
+            "MappingProfile": "/Implementation",
+            "InjectionMapping": "/Implementation",
+            "DTO": "/DTOs",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi"
+        },
+        "NameSpace": "DtmSysAdmin.WebApi"
+    },
+    "Domain": {
+        "Paths": {
+            "Entities": "/Entities",
+            "Infrastructure": "/Interfaces/Infrastructure",
+            "Repositories": "/Interfaces/Repositories",
+            "Services": "/Interfaces/Services",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain"
+        },
+        "NameSpace": "DtmSysAdmin.Domain"
+    },
+    "InfraStructure": {
+        "NameDbContext": "DtmSysAdminContext",
+        "Paths": {
+            "Models": "/Models",
+            "DbContext": "/DbContexts",
+            "Repositories": "/Repositories",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data"
+        },
+        "NameSpace": "DtmSysAdmin.Infrastructure.Data"
+    }
+}

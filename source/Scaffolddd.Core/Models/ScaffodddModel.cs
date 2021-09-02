@@ -16,11 +16,10 @@ namespace Scaffolddd.Core.Models
         public bool OverWrite { get; set; }
         public bool BackupOld { get; set; }
 
+
         public ApplicationModel Application { get; set; }
         public DomainModel Domain  { get; set; }
         public InfraStructureModel InfraStructure { get; set; }
-
-
         
         
     }

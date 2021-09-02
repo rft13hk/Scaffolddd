@@ -243,15 +243,21 @@ namespace Scaffolddd.Core.Resource
             return sb.ToString();
         }
 
-        internal static string GetTextForDependencyInjectionMapping(ScaffoldddModel conf, string tab, string entity)
+        internal static string GetTextForDependencyInjectionMapping(ScaffoldddModel conf, string tab, Dictionary<string,string> _dicSwapService, Dictionary<string,string> _dicSwapRepository)
         {
             StringBuilder sb = new StringBuilder();
              
-            sb.AppendLine(@"using AutoMapper;");
-            sb.AppendLine(string.Concat("using ",conf.Application.NameSpace,".DTOs"));
-            sb.AppendLine(string.Concat("using ",conf.Domain.NameSpace,".Entities"));
-            sb.AppendLine(string.Concat("using ",conf.InfraStructure.NameSpace,".Models"));
-            sb.AppendLine();      
+            sb.AppendLine(@"using Microsoft.Extensions.DependencyInjection;");
+
+            var usingDomainInterface = string.Concat("using ",conf.Domain.NameSpace,".Interfaces");
+            var usingDomainServices = string.Concat("using ",conf.Domain.NameSpace,".Services");
+
+
+            sb.AppendLine(string.Concat(usingDomainInterface,".DTOs"));
+
+
+            //--------------
+            sb.AppendLine();
 
             sb.AppendLine(string.Concat("namespace ", conf.Application.NameSpace,".Implementation"));
             sb.AppendLine("{");
@@ -262,9 +268,26 @@ namespace Scaffolddd.Core.Resource
             sb.AppendLine(string.Concat(tab,tab, @"public MappingProfile()"));
             sb.AppendLine(string.Concat(tab,tab, @"{"));
             
-            sb.AppendLine(string.Concat(tab,tab,tab, @"#region API"));
+            sb.AppendLine(string.Concat(tab,tab,tab, @"#region Services"));
+
             sb.AppendLine();
-            
+            foreach (var item in _dicSwapService)
+            {
+                sb.AppendLine(string.Concat(tab,tab,tab, string.Concat("CreateMap<", item.Key,", ",item.Value,">().ReverseMap();" )));
+            }
+            sb.AppendLine();
+
+            sb.AppendLine(string.Concat(tab,tab,tab, @"#endregion"));
+
+            sb.AppendLine();
+
+            sb.AppendLine(string.Concat(tab,tab,tab, @"#region Repositories"));
+            sb.AppendLine();
+            foreach (var item in _dicSwapRepository)
+            {
+                sb.AppendLine(string.Concat(tab,tab,tab, string.Concat("CreateMap<", item.Key,", ",item.Value,">().ReverseMap();" )));
+            }
+            sb.AppendLine();
 
             sb.AppendLine(string.Concat(tab,tab,tab, @"#endregion"));
             sb.AppendLine();

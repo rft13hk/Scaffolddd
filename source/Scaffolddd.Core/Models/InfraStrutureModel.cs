@@ -1,16 +1,14 @@
 namespace Scaffolddd.Core.Models
 {
-    public class InfraStructureModel
+    public class InfraStructureModel: BaseModel
     {
-        public string ProjectName { get; set; }
-        public string NameSpace { get; set; }
-
         public string NameDbContext { get; set; }
-        public string PathForModels { get; set; }
-        public string PathForDbContext { get; set; }
-        public string PathForRepositories { get; set; }
 
+        public InfraStructureModel()
+        {
+            Paths = new InfraStruturePathsModel();
+        }
 
-
+        public InfraStruturePathsModel Paths { get; set; }
     }
 }

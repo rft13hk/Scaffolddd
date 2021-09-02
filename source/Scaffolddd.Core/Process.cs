@@ -29,9 +29,10 @@ namespace Scaffolddd.Core
 
         private void LoadFiles()
         {
-            _lstFilesModels = FileUtils.ProcessDirectory(_conf.InfraStructure.PathForModels);
+            _lstFilesModels = FileUtils.ProcessDirectory(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Models));
             _lstNameModels = new List<string>();
             _lstFilesModels.ForEach( f => _lstNameModels.Add(FileUtils.ExtractNameFromPath(f).Replace(".cs","")));
+
         }
 
 
@@ -55,12 +56,13 @@ namespace Scaffolddd.Core
                     string readText = File.ReadAllText(item);
                     
                     var newtext = StringUtils.Replace(readText,_dicSwapEntity);
+
                     newtext = newtext.Replace(string.Concat(_conf.InfraStructure.NameSpace,".Models") 
                         , string.Concat(_conf.Domain.NameSpace,".Entities") );
 
                     var entity = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
 
-                    var pathFile = string.Concat(_conf.Domain.PathForEntities, "/", entity,"Entity.cs1"); 
+                    var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Entities), "/", entity,"Entity.cs1"); 
 
                     if (!File.Exists(pathFile))
                     {
@@ -86,7 +88,7 @@ namespace Scaffolddd.Core
 
                     var dto = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
 
-                    var pathFile = string.Concat(_conf.Application.PathForDTO, "/", dto,"Dto.cs1"); 
+                    var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.DTO), "/", dto,"Dto.cs1"); 
 
                     if (!File.Exists(pathFile))
                     {
@@ -105,7 +107,7 @@ namespace Scaffolddd.Core
             {
                 var newtext = readText.Replace("[[CLASS]]",item);
 
-                var pathFile = string.Concat(_conf.Domain.PathForInterfaces, "/Repositories/I", item,"Repository.cs1"); 
+                var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Repositories), "/I", item,"Repository.cs1"); 
 
                 if (!File.Exists(pathFile))
                 {
@@ -122,7 +124,7 @@ namespace Scaffolddd.Core
             {
                 var newtext = readText.Replace("[[CLASS]]",item);
 
-                var pathFile = string.Concat(_conf.InfraStructure.PathForRepositories, "/", item,"Repository.cs1"); 
+                var pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories), "/", item,"Repository.cs1"); 
 
                 if (!File.Exists(pathFile))
                 {
@@ -135,7 +137,7 @@ namespace Scaffolddd.Core
         {
             var newtext = Templates.GetTextForMapping(_conf,tab,_dicSwapDto, _dicSwapEntity);
 
-            var pathFile = string.Concat(_conf.Application.PathForMappingProfile,"/MappingProfile.cs1");
+            var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs1");
 
             if (!File.Exists(pathFile))
             {
@@ -147,6 +149,17 @@ namespace Scaffolddd.Core
 
         private void ProcessDependencyInjectionMapping(bool onlyNotFound)
         {
+
+
+
+            var newtext = Templates.GetTextForDependencyInjectionMapping(_conf,tab,_dicSwapDto, _dicSwapEntity);
+
+            var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs1");
+
+            if (!File.Exists(pathFile))
+            {
+                File.WriteAllText(pathFile,newtext);
+            }
 
         }
 
@@ -166,7 +179,18 @@ namespace Scaffolddd.Core
             #region Passo 1 - Criar as Classes e Interfaces Base caso as mesmas nao existao: IUnitOfWork, UnitOfWork, IBaseRepository, BaseRepositori
 
             #region IUnitOfWork, UnitOfWork
-            string pathFile = string.Concat(_conf.InfraStructure.PathForDbContext, "/UnitOfWork.cs1"); 
+
+            string pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs1"); 
+
+            if (!File.Exists(pathFile))
+            {
+                var template = Templates.GetTextForIUnitOfWork(_conf,tab);
+
+                // Gravar arquivo...
+                File.WriteAllText(pathFile,template);
+            }
+
+            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath( _conf.InfraStructure.Paths.DbContext), "/UnitOfWork.cs1"); 
 
             if (!File.Exists(pathFile))
             {
@@ -176,31 +200,12 @@ namespace Scaffolddd.Core
                 File.WriteAllText(pathFile,template);
             }
 
-            pathFile = string.Concat(_conf.Domain.PathForInterfaces, "/Infrastructure/IUnitOfWork.cs1"); 
-
-            if (!File.Exists(pathFile))
-            {
-                var template = Templates.GetTextForUnitOfWork(_conf,tab);
-
-                // Gravar arquivo...
-                File.WriteAllText(pathFile,template);
-            }
-
-            pathFile = string.Concat(_conf.Domain.PathForInterfaces, "/Infrastructure/IUnitOfWork.cs1"); 
-
-            if (!File.Exists(pathFile))
-            {
-                var template = Templates.GetTextForUnitOfWork(_conf,tab);
-
-                // Gravar arquivo...
-                File.WriteAllText(pathFile,template);
-            }
 
             #endregion
 
             #region IBaseRepository, BaseRepository
 
-            pathFile = string.Concat(_conf.Domain.PathForInterfaces, "/Repositories/IBaseRepository.cs1"); 
+            pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Repositories), "/IBaseRepository.cs1"); 
 
             if (!File.Exists(pathFile))
             {
@@ -210,7 +215,7 @@ namespace Scaffolddd.Core
                 File.WriteAllText(pathFile,template);
             }
 
-            pathFile = string.Concat(_conf.InfraStructure.PathForRepositories, "/BaseRepository.cs1"); 
+            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories) , "/BaseRepository.cs1"); 
 
             if (!File.Exists(pathFile))
             {
@@ -225,22 +230,22 @@ namespace Scaffolddd.Core
             #endregion
 
             //Passo 2 - Criar as Entidades
-            ProcessEntities(true);
+            ProcessEntities(!_conf.OverWrite);
 
             //Passo 3 - Criar os DTOs
-            ProcessDtos(true);
+            ProcessDtos(!_conf.OverWrite);
 
             //Passo 4 - Criar as Interfaces dos Repositorios
-            ProcessInterfaces(true);
+            ProcessInterfaces(!_conf.OverWrite);
 
             //Passo 5 - Criar os Repositorios
-            ProcessRepositories(true);
+            ProcessRepositories(!_conf.OverWrite);
 
             //Passo 6 - Criar os mapeamentos
-            ProcessMapping(true);
+            ProcessMapping(!_conf.OverWrite);
 
             //Passo 7 - Criar os mapeamentos de injeçao de dependencia
-            
+            //ProcessDependencyInjectionMapping(!_conf.OverWrite);
         }
     }
 }
