@@ -25,9 +25,6 @@ namespace Scaffolddd.Core
         {
             _conf = conf;
 
-            LoadFiles();
-
-            GenerateSwapNames();
         }
 
         private void LoadFiles()
@@ -134,6 +131,26 @@ namespace Scaffolddd.Core
             }
         }
 
+        private void ProcessMapping(bool onlyNotFound)
+        {
+            var newtext = Templates.GetTextForMapping(_conf,tab,_dicSwapDto, _dicSwapEntity);
+
+            var pathFile = string.Concat(_conf.Application.PathForMappingProfile,"/MappingProfile.cs1");
+
+            if (!File.Exists(pathFile))
+            {
+                File.WriteAllText(pathFile,newtext);
+            }
+
+
+        }
+
+        private void ProcessDependencyInjectionMapping(bool onlyNotFound)
+        {
+
+        }
+
+
         public string GetTemplate()
         {
             return Templates.GetTextForRepository(_conf,tab,"Abacaxi");
@@ -142,6 +159,10 @@ namespace Scaffolddd.Core
 
         public void Start()
         {
+            LoadFiles();
+
+            GenerateSwapNames();
+
             #region Passo 1 - Criar as Classes e Interfaces Base caso as mesmas nao existao: IUnitOfWork, UnitOfWork, IBaseRepository, BaseRepositori
 
             #region IUnitOfWork, UnitOfWork
@@ -214,6 +235,11 @@ namespace Scaffolddd.Core
 
             //Passo 5 - Criar os Repositorios
             ProcessRepositories(true);
+
+            //Passo 6 - Criar os mapeamentos
+            ProcessMapping(true);
+
+            //Passo 7 - Criar os mapeamentos de injeçao de dependencia
             
         }
     }

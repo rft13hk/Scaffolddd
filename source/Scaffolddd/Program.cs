@@ -42,8 +42,8 @@ namespace Scaffolddd
             conf.Application.ProjectName = "DtmSysAdmin.WebApi";
             conf.Application.NameSpace = "DtmSysAdmin.WebApi";
 
-            conf.Application.PathForMappingProfile = @"";
-            conf.Application.PathForInjectionMapping = @"";
+            conf.Application.PathForMappingProfile = @"/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi/Implementation";
+            conf.Application.PathForInjectionMapping = @"/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi/Implementation";
             conf.Application.PathForDTO = @"/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi/DTOs";
 
             #endregion
