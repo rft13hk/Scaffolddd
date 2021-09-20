@@ -46,7 +46,7 @@ namespace Scaffolddd.Core.Resource
             sb.AppendLine(string.Concat(tab,tab, "public async Task<",entity,"Entity> Insert(",entity,"Entity entity)"));
             sb.AppendLine(string.Concat(tab,tab, "{"));
             sb.AppendLine(string.Concat(tab,tab,tab, "var retorno= await _context.",entity,".AddAsync(_mapper.Map<Models.",entity,">(entity));"));
-            sb.AppendLine(string.Concat(tab,tab,tab, "return _mapper.Map<",entity,"Entity>(retorno);"));
+            sb.AppendLine(string.Concat(tab,tab,tab, "return _mapper.Map<",entity,"Entity>(retorno.Entity);"));
             sb.AppendLine(string.Concat(tab,tab, "}"));
             sb.AppendLine();
 
@@ -57,7 +57,7 @@ namespace Scaffolddd.Core.Resource
             sb.AppendLine(string.Concat(tab,tab,tab, "_mapper.Map(entity,entityFound);"));
             sb.AppendLine(string.Concat(tab,tab,tab, "var retorno = _context.",entity,".Update(entityFound);"));
 
-            sb.AppendLine(string.Concat(tab,tab,tab, "return _mapper.Map<",entity,"Entity>(retorno);"));
+            sb.AppendLine(string.Concat(tab,tab,tab, "return _mapper.Map<",entity,"Entity>(retorno.Entity);"));
             sb.AppendLine(string.Concat(tab,tab, "}"));
             sb.AppendLine();
 
