@@ -8,6 +8,7 @@ namespace Scaffolddd.Core.Models
             Application = new ApplicationModel();
             Domain = new DomainModel();    
             InfraStructure = new InfraStructureModel();
+            Flags = new FlagsModel();
             BackupOld = true;
             OverWrite = false;
         }
@@ -16,7 +17,7 @@ namespace Scaffolddd.Core.Models
         public bool OverWrite { get; set; }
         public bool BackupOld { get; set; }
 
-
+        public FlagsModel Flags { get; set;}
         public ApplicationModel Application { get; set; }
         public DomainModel Domain  { get; set; }
         public InfraStructureModel InfraStructure { get; set; }

@@ -28,6 +28,29 @@ namespace Scaffolddd
             confTemplate.BackupOld = true;
             confTemplate.OverWrite = false;
 
+            confTemplate.Flags.GenerateIUnitOfWork = true;
+            confTemplate.Flags.GenerateUnitOfWork = true;
+            
+            confTemplate.Flags.GenerateIBaseRepository = true;
+            confTemplate.Flags.GenerateBaseRepository = true;
+            
+            confTemplate.Flags.GenerateIBaseService = true;
+            confTemplate.Flags.GenerateBaseService = true;
+
+            confTemplate.Flags.GenerateEntities = true;
+            confTemplate.Flags.GenerateDTOs = true;
+
+            confTemplate.Flags.GenerateRepositoryInterfaces = true;
+            confTemplate.Flags.GenerateRepositories = true;
+
+            confTemplate.Flags.GenerateMappings = true;
+            confTemplate.Flags.GenerateDependencyInjection = true;
+
+            confTemplate.Flags.GenerateIBaseValidation = true;
+            confTemplate.Flags.GenerateBaseValidation = true;
+            confTemplate.Flags.GenerateValidaions = true;
+
+
             confTemplate.InfraStructure.NameSpace = "<Namespace of project infrastructure>";
             confTemplate.InfraStructure.NameDbContext = "<Name of DbContext File>";
             confTemplate.InfraStructure.Paths.Project = @"<path of project>";

@@ -119,7 +119,7 @@ namespace Scaffolddd.Core
 
         private void ProcessInterfaces(bool onlyNotFound)
         {
-            var readText = Templates.GetTextForInterfaces(_conf,tab);
+            var readText = InterfacesTemplate.MakeTemplate(_conf,tab);
 
             foreach (var item in _lstNameModels)
             {
@@ -139,7 +139,7 @@ namespace Scaffolddd.Core
         {
             foreach (var item in _lstNameModels)
             {
-                var readText = Templates.GetTextForRepository(_conf,tab,item);
+                var readText = RepositoryTemplate.MakeTemplate(_conf,tab,item);
 
                 var newtext = readText.Replace("[[CLASS]]",item);
 
@@ -155,7 +155,7 @@ namespace Scaffolddd.Core
 
         private void ProcessMapping(bool onlyNotFound)
         {
-            var newtext = Templates.GetTextForMapping(_conf,tab,_dicSwapDto, _dicSwapEntity);
+            var newtext = MappingTemplate.MakeTemplate(_conf,tab,_dicSwapDto, _dicSwapEntity);
 
             var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs");
 
@@ -171,26 +171,18 @@ namespace Scaffolddd.Core
         private void ProcessDependencyInjectionMapping(bool onlyNotFound)
         {
 
-
-
-            var newtext = Templates.GetTextForDependencyInjectionMapping(_conf,tab,_dicSwapDto, _dicSwapEntity);
+            var newtext = DependencyInjectionMappingTemplate.MakeTemplate(_conf,tab,_dicSwapDto, _dicSwapEntity);
 
             var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs");
 
             WriteFile(newtext,pathFile);
+
             // if (!File.Exists(pathFile))
             // {
             //     File.WriteAllText(pathFile,newtext);
             // }
 
         }
-
-
-        public string GetTemplate()
-        {
-            return Templates.GetTextForRepository(_conf,tab,"Abacaxi");
-        }
-
 
         public void Start()
         {
@@ -202,77 +194,109 @@ namespace Scaffolddd.Core
 
             #region IUnitOfWork, UnitOfWork
 
-            string pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs"); 
+            string template, pathFile;
 
-            //if (!File.Exists(pathFile))
-            //{
-                var template = Templates.GetTextForIUnitOfWork(_conf,tab);
+            if (_conf.Flags.GenerateIUnitOfWork)
+            {
+                pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs"); 
 
-                // Gravar arquivo...
-                //File.WriteAllText(pathFile,template);
-                WriteFile(template,pathFile);
-            //}
+                //if (!File.Exists(pathFile))
+                //{
+                    template = IUnitOfWorkTemplate.MakeTemplate(_conf,tab);
 
+                    // Gravar arquivo...
+                    //File.WriteAllText(pathFile,template);
+                    WriteFile(template,pathFile);
+                //}
+            }
 
-            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath( _conf.InfraStructure.Paths.DbContext), "/UnitOfWork.cs"); 
+            if (_conf.Flags.GenerateUnitOfWork)
+            {
+                pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath( _conf.InfraStructure.Paths.DbContext), "/UnitOfWork.cs"); 
 
-            //if (!File.Exists(pathFile))
-            //{
-                template = Templates.GetTextForUnitOfWork(_conf,tab);
+                //if (!File.Exists(pathFile))
+                //{
+                    template = UnitOfWorkTemplate.MakeTemplate(_conf,tab);
 
-                // Gravar arquivo...
-                //File.WriteAllText(pathFile,template);
-                WriteFile(template,pathFile);
-            //}
-
+                    // Gravar arquivo...
+                    //File.WriteAllText(pathFile,template);
+                    WriteFile(template,pathFile);
+                //}
+            }
 
             #endregion
 
             #region IBaseRepository, BaseRepository
 
-            pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Repositories), "/IBaseRepository.cs"); 
+            if (_conf.Flags.GenerateIBaseRepository)
+            {
+                pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Repositories), "/IBaseRepository.cs"); 
 
-            //if (!File.Exists(pathFile))
-            //{
-                template = Templates.GetTextForIBaseRepository(_conf,tab);
+                //if (!File.Exists(pathFile))
+                //{
+                    template = IBaseRepositoryTemplate.MakeTemplate(_conf,tab);
 
-                // Gravar arquivo...
-                //File.WriteAllText(pathFile,template);
-                WriteFile(template,pathFile);
-            //}
+                    // Gravar arquivo...
+                    //File.WriteAllText(pathFile,template);
+                    WriteFile(template,pathFile);
+                //}
+            }
 
-            pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories) , "/BaseRepository.cs"); 
+            if (_conf.Flags.GenerateBaseRepository)
+            {
+                pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories) , "/BaseRepository.cs"); 
 
-            //if (!File.Exists(pathFile))
-            //{
-                template = Templates.GetTextForBaseRepository(_conf,tab);
+                //if (!File.Exists(pathFile))
+                //{
+                    template = BaseRepositoryTemplate.MakeTemplate(_conf,tab);
 
-                // Gravar arquivo...
-                //File.WriteAllText(pathFile,template);
-                WriteFile(template,pathFile);
-            //}
+                    // Gravar arquivo...
+                    //File.WriteAllText(pathFile,template);
+                    WriteFile(template,pathFile);
+                //}
+            }
 
             #endregion
 
             #endregion
 
             //Passo 2 - Criar as Entidades
-            ProcessEntities(!_conf.OverWrite);
+            if (_conf.Flags.GenerateEntities)
+            {
+                ProcessEntities(!_conf.OverWrite);
+            }
 
             //Passo 3 - Criar os DTOs
-            ProcessDtos(!_conf.OverWrite);
+            if (_conf.Flags.GenerateDTOs)
+            {
+                ProcessDtos(!_conf.OverWrite);
+            }
 
             //Passo 4 - Criar as Interfaces dos Repositorios
-            ProcessInterfaces(!_conf.OverWrite);
+            if (_conf.Flags.GenerateRepositoryInterfaces)
+            {
+                ProcessInterfaces(!_conf.OverWrite);
+            }
 
             //Passo 5 - Criar os Repositorios
-            ProcessRepositories(!_conf.OverWrite);
+            if (_conf.Flags.GenerateRepositories)
+            {
+                ProcessRepositories(!_conf.OverWrite);
+            }
 
             //Passo 6 - Criar os mapeamentos
-            ProcessMapping(!_conf.OverWrite);
+            if (_conf.Flags.GenerateMappings)
+            {
+                ProcessMapping(!_conf.OverWrite);
+            }
 
             //Passo 7 - Criar os mapeamentos de injeçao de dependencia
-            //ProcessDependencyInjectionMapping(!_conf.OverWrite);
+            if (_conf.Flags.GenerateDependencyInjection)
+            {
+                //ProcessDependencyInjectionMapping(!_conf.OverWrite);
+            }
         }
+
+
     }
 }
