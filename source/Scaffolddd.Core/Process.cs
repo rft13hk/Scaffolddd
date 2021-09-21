@@ -53,13 +53,28 @@ namespace Scaffolddd.Core
             return (text1.RemoveBreakLine().RemoveWhitespace().ToUpper() == text2.RemoveBreakLine().RemoveWhitespace().ToUpper());
         }
 
-        private void WriteFile(string text, string pathFile)
+        private void WriteFile(string text, string pathFileDest, string pathFileSource = null)
         {
-            var fileExist = File.Exists(pathFile);
+            // if (!string.IsNullOrEmpty(pathFileSource))
+            // {
+            //     var fileSourceExist = File.Exists(pathFileSource);
+
+            //     if (fileSourceExist)
+            //     {
+            //         var oldText = File.ReadAllText(pathFileSource);
+
+            //         if (CompareString(text, oldText))
+            //         {
+            //             return;
+            //         }
+            //     }
+            // }
+
+            var fileExist = File.Exists(pathFileDest);
 
             if (fileExist)
             {
-                var oldText = File.ReadAllText(pathFile);
+                var oldText = File.ReadAllText(pathFileDest);
 
                 if (CompareString(text, oldText))
                 {
@@ -67,23 +82,24 @@ namespace Scaffolddd.Core
                 }
             }
 
+
             if (_conf.BackupOld && fileExist && _conf.OverWrite)
             {
-                File.Copy(pathFile, string.Concat(pathFile,"_bk_",DateTime.Now.ToString("yyyyMMdd-HHmmss") ),true);
+                File.Copy(pathFileDest, string.Concat(pathFileDest,"_bk_",DateTime.Now.ToString("yyyyMMdd-HHmmss") ),true);
             }
 
             if (fileExist && _conf.OverWrite)
             {
-                File.Delete(pathFile);
+                File.Delete(pathFileDest);
             }
 
-            if (!File.Exists(pathFile))
+            if (!File.Exists(pathFileDest))
             {
-                File.WriteAllText(pathFile,text);
+                File.WriteAllText(pathFileDest,text);
             }
         }
 
-        private void ProcessEntities(bool onlyNotFound)
+        private void ProcessEntities()
         {
             foreach (var item in _lstFilesModels)
             {
@@ -216,30 +232,18 @@ namespace Scaffolddd.Core
             {
                 pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs"); 
 
+                template = IUnitOfWorkTemplate.MakeTemplate(_conf,tab);
 
-
-                //if (!File.Exists(pathFile))
-                //{
-                    template = IUnitOfWorkTemplate.MakeTemplate(_conf,tab);
-
-                    // Gravar arquivo...
-                    //File.WriteAllText(pathFile,template);
-                    WriteFile(template,pathFile);
-                //}
+                WriteFile(template,pathFile);
             }
 
             if (_conf.Flags.GenerateUnitOfWork)
             {
                 pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath( _conf.InfraStructure.Paths.DbContext), "/UnitOfWork.cs"); 
 
-                //if (!File.Exists(pathFile))
-                //{
-                    template = UnitOfWorkTemplate.MakeTemplate(_conf,tab);
+                template = UnitOfWorkTemplate.MakeTemplate(_conf,tab);
 
-                    // Gravar arquivo...
-                    //File.WriteAllText(pathFile,template);
-                    WriteFile(template,pathFile);
-                //}
+                WriteFile(template,pathFile);
             }
 
             #endregion
@@ -281,7 +285,7 @@ namespace Scaffolddd.Core
             //Passo 2 - Criar as Entidades
             if (_conf.Flags.GenerateEntities)
             {
-                ProcessEntities(!_conf.OverWrite);
+                ProcessEntities();
             }
 
             //Passo 3 - Criar os DTOs
