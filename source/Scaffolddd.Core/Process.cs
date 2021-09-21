@@ -47,9 +47,25 @@ namespace Scaffolddd.Core
             _lstNameModels.ForEach(f => _dicSwapRepository .Add(f,string.Concat(f,"Repository")));
         }
 
+
+        private static bool CompareString(string text1, string text2)
+        {
+            return (text1.RemoveBreakLine().RemoveWhitespace().ToUpper() == text2.RemoveBreakLine().RemoveWhitespace().ToUpper());
+        }
+
         private void WriteFile(string text, string pathFile)
         {
             var fileExist = File.Exists(pathFile);
+
+            if (fileExist)
+            {
+                var oldText = File.ReadAllText(pathFile);
+
+                if (CompareString(text, oldText))
+                {
+                    return;
+                }
+            }
 
             if (_conf.BackupOld && fileExist && _conf.OverWrite)
             {
@@ -199,6 +215,8 @@ namespace Scaffolddd.Core
             if (_conf.Flags.GenerateIUnitOfWork)
             {
                 pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs"); 
+
+
 
                 //if (!File.Exists(pathFile))
                 //{

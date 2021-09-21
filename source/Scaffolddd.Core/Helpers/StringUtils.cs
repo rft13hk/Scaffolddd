@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Scaffolddd.Core.Helpers
@@ -26,5 +28,18 @@ namespace Scaffolddd.Core.Helpers
 
             return textStart;
         }
+
+         public static string RemoveWhitespace(this string input)
+         {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+         }
+
+         public static string RemoveBreakLine(this string input)
+         {
+             return input.Replace(System.Environment.NewLine, input); //add a line terminating ;
+         }
+
     }
 }
