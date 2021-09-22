@@ -27,7 +27,7 @@ namespace Scaffolddd
             confTemplate.ProjectName = "<Name of your Project>";
             confTemplate.BackupOld = true;
             confTemplate.OverWrite = false;
-
+            //-----------------------------------------------------------------------------------------------
             confTemplate.Flags.GenerateIUnitOfWork = true;
             confTemplate.Flags.GenerateUnitOfWork = true;
             
@@ -49,23 +49,27 @@ namespace Scaffolddd
             confTemplate.Flags.GenerateIBaseValidation = true;
             confTemplate.Flags.GenerateBaseValidation = true;
             confTemplate.Flags.GenerateValidaions = true;
-
-
+            //-----------------------------------------------------------------------------------------------
             confTemplate.InfraStructure.NameSpace = "<Namespace of project infrastructure>";
             confTemplate.InfraStructure.NameDbContext = "<Name of DbContext File>";
             confTemplate.InfraStructure.Paths.Project = @"<path of project>";
             confTemplate.InfraStructure.Paths.DbContext =  @"<Diretory of DbContexts>";
             confTemplate.InfraStructure.Paths.Models = @"<Diretory of Models>";
             confTemplate.InfraStructure.Paths.Repositories = @"<Diretory of Repositories>";
-
+            //-----------------------------------------------------------------------------------------------
             confTemplate.Domain.NameSpace = "<Namespace of project Domain>";
             confTemplate.Domain.Paths.Project = @"<Path of Project>";
 
-            confTemplate.Domain.Paths.Entities = @"<Path of Entities>";
-            confTemplate.Domain.Paths.Infrastructure = @"<Path of interfaces the Interfaces/Infrastructure>";
-            confTemplate.Domain.Paths.Repositories = @"<Path of interfaces the Interfaces/Repositories>";
-            confTemplate.Domain.Paths.Services = @"<Path of interfaces the Interfaces/Services>";
+            confTemplate.Domain.Paths.Interface.Infrastructure = @"<Path of interfaces the Infrastructure>";
+            confTemplate.Domain.Paths.Interface.Repositories = @"<Path of interfaces the IRepositories>";
+            confTemplate.Domain.Paths.Interface.Services = @"<Path of interfaces the IServices>";
+            confTemplate.Domain.Paths.Interface.Validations = @"<Path of interfaces the IValidations>";
 
+            confTemplate.Domain.Paths.Implementation.Entities = @"<Path of Entities>";
+            confTemplate.Domain.Paths.Implementation.Validations = @"<Path of Validations>";
+            confTemplate.Domain.Paths.Implementation.Services = @"<Path of Services>";
+
+            //-----------------------------------------------------------------------------------------------
             confTemplate.Application.NameSpace = "<Namespace of project Application>";
             confTemplate.Application.Paths.Project = @"<path of project>";
             confTemplate.Application.Paths.MappingProfile = @"<Directory of MappingProfile";

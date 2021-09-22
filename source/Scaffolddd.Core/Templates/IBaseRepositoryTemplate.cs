@@ -1,7 +1,7 @@
 using System.Text;
 using Scaffolddd.Core.Models;
 
-namespace Scaffolddd.Core.Resource
+namespace Scaffolddd.Core.Templates
 {
     internal static class IBaseRepositoryTemplate
     {

@@ -4,7 +4,7 @@ namespace Scaffolddd.Core.Models
     {
         public DomainModel()
         {
-            Paths = new DomainPathsModel();    
+            Paths = new DomainPathsModel();   
         }
 
         public DomainPathsModel Paths { get; set; }

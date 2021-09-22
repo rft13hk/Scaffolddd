@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Scaffolddd.Core.Helpers;
 using Scaffolddd.Core.Models;
-using Scaffolddd.Core.Resource;
+using Scaffolddd.Core.Templates;
 
 namespace Scaffolddd.Core
 {
@@ -63,7 +63,7 @@ namespace Scaffolddd.Core
 
                     var entity = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
 
-                    var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Entities), "/", entity,"Entity.cs"); 
+                    var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Implementation.Entities), "/", entity,"Entity.cs"); 
 
                     FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
                 }
@@ -106,7 +106,7 @@ namespace Scaffolddd.Core
             {
                 var newtext = readText.Replace("[[CLASS]]",item);
 
-                var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Repositories), "/I", item,"Repository.cs"); 
+                var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Interface.Repositories), "/I", item,"Repository.cs"); 
 
                 FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
                 // if (!File.Exists(pathFile))
@@ -179,7 +179,7 @@ namespace Scaffolddd.Core
 
             if (_conf.Flags.GenerateIUnitOfWork)
             {
-                pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Infrastructure), "/IUnitOfWork.cs"); 
+                pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Interface.Infrastructure), "/IUnitOfWork.cs"); 
 
                 template = IUnitOfWorkTemplate.MakeTemplate(_conf,tab);
 
@@ -201,7 +201,7 @@ namespace Scaffolddd.Core
 
             if (_conf.Flags.GenerateIBaseRepository)
             {
-                pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Repositories), "/IBaseRepository.cs"); 
+                pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Interface.Repositories), "/IBaseRepository.cs"); 
 
                 //if (!File.Exists(pathFile))
                 //{
@@ -217,17 +217,38 @@ namespace Scaffolddd.Core
             {
                 pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories) , "/BaseRepository.cs"); 
 
-                //if (!File.Exists(pathFile))
-                //{
-                    template = BaseRepositoryTemplate.MakeTemplate(_conf,tab);
+                template = BaseRepositoryTemplate.MakeTemplate(_conf,tab);
 
-                    // Gravar arquivo...
-                    //File.WriteAllText(pathFile,template);
-                    FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
-                //}
+                FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
             }
 
             #endregion
+
+            #region IBaseValidation, BaseValidation
+
+            if (_conf.Flags.GenerateIBaseRepository)
+            {
+                pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Interface.Validations), "/IBaseValidation.cs"); 
+
+                template = IBaseValidationTemplate.MakeTemplate(_conf,tab);
+
+                FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
+            }
+
+            if (_conf.Flags.GenerateBaseRepository)
+            {
+                pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Implementation.Validations), "/BaseValidation.cs"); 
+
+                template = IBaseValidationTemplate.MakeTemplate(_conf,tab);
+
+                FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
+            }
+
+
+
+            #endregion
+
+
 
             #endregion
 
