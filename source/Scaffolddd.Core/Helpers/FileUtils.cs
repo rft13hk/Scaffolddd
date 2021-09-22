@@ -39,6 +39,46 @@ namespace Scaffolddd.Core.Helpers
             return retorno;
         }
 
+        public static void WriteFile(string text, string pathFileDest, bool overWrite, bool backupOld)
+        {
+            #region Compare Old and New
+
+            var fileExist = File.Exists(pathFileDest);
+
+            if (fileExist)
+            {
+                var oldText = File.ReadAllText(pathFileDest);
+
+                if (StringUtils.CompareString(text, oldText))
+                {
+                    //Is Equal then exit;
+                    return;
+                }
+            }
+            #endregion
+
+            var nowName = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+
+            if (backupOld && fileExist && overWrite)
+            {
+                // Create Backup 
+                File.Copy(pathFileDest, string.Concat(pathFileDest,"_Old_", nowName ),true);
+            }
+
+            if (fileExist && overWrite)
+            {
+                File.Delete(pathFileDest);
+            }
+
+            if (!File.Exists(pathFileDest))
+            {
+                File.WriteAllText(pathFileDest,text);
+            }
+            else
+            {
+                File.WriteAllText(string.Concat(pathFileDest,"_New_", nowName ),text);
+            }
+        }
 
     }
 }

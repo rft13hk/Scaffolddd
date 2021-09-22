@@ -48,52 +48,6 @@ namespace Scaffolddd.Core
         }
 
 
-        private static bool CompareString(string text1, string text2)
-        {
-            return (text1.RemoveBreakLine().RemoveWhitespace().ToUpper() == text2.RemoveBreakLine().RemoveWhitespace().ToUpper());
-        }
-
-        private void WriteFile(string text, string pathFileDest, string pathFileSource = null)
-        {
-            #region Compare Old and New
-
-            var fileExist = File.Exists(pathFileDest);
-
-            if (fileExist)
-            {
-                var oldText = File.ReadAllText(pathFileDest);
-
-                if (CompareString(text, oldText))
-                {
-                    //Is Equal then exit;
-                    return;
-                }
-            }
-            #endregion
-
-            var nowName = DateTime.Now.ToString("yyyyMMdd-HHmmss");
-
-            if (_conf.BackupOld && fileExist && _conf.OverWrite)
-            {
-                // Create Backup 
-                File.Copy(pathFileDest, string.Concat(pathFileDest,"_Old_", nowName ),true);
-            }
-
-            if (fileExist && _conf.OverWrite)
-            {
-                File.Delete(pathFileDest);
-            }
-
-            if (!File.Exists(pathFileDest))
-            {
-                File.WriteAllText(pathFileDest,text);
-            }
-            else
-            {
-                File.WriteAllText(string.Concat(pathFileDest,"_New_", nowName ),text);
-            }
-        }
-
         private void ProcessEntities()
         {
             foreach (var item in _lstFilesModels)
@@ -111,7 +65,7 @@ namespace Scaffolddd.Core
 
                     var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Entities), "/", entity,"Entity.cs"); 
 
-                    WriteFile(newtext,pathFile);
+                    FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
                 }
                 
             }
@@ -134,7 +88,7 @@ namespace Scaffolddd.Core
 
                     var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.DTO), "/", dto,"Dto.cs"); 
 
-                    WriteFile(newtext,pathFile);
+                    FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
                     // if (!File.Exists(pathFile))
                     // {
                     //     File.WriteAllText(pathFile,newtext);
@@ -154,7 +108,7 @@ namespace Scaffolddd.Core
 
                 var pathFile = string.Concat(_conf.Domain.Paths.GetPath(_conf.Domain.Paths.Repositories), "/I", item,"Repository.cs"); 
 
-                WriteFile(newtext,pathFile);
+                FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
                 // if (!File.Exists(pathFile))
                 // {
                 //     File.WriteAllText(pathFile,newtext);
@@ -172,7 +126,7 @@ namespace Scaffolddd.Core
 
                 var pathFile = string.Concat(_conf.InfraStructure.Paths.GetPath(_conf.InfraStructure.Paths.Repositories), "/", item,"Repository.cs"); 
 
-                WriteFile(newtext,pathFile);
+                FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
                 // if (!File.Exists(pathFile))
                 // {
                 //     File.WriteAllText(pathFile,newtext);
@@ -186,7 +140,7 @@ namespace Scaffolddd.Core
 
             var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs");
 
-            WriteFile(newtext,pathFile);
+            FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
             // if (!File.Exists(pathFile))
             // {
             //     File.WriteAllText(pathFile,newtext);
@@ -202,7 +156,7 @@ namespace Scaffolddd.Core
 
             var pathFile = string.Concat(_conf.Application.Paths.GetPath(_conf.Application.Paths.MappingProfile),"/MappingProfile.cs");
 
-            WriteFile(newtext,pathFile);
+            FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
 
             // if (!File.Exists(pathFile))
             // {
@@ -229,7 +183,7 @@ namespace Scaffolddd.Core
 
                 template = IUnitOfWorkTemplate.MakeTemplate(_conf,tab);
 
-                WriteFile(template,pathFile);
+                FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
             }
 
             if (_conf.Flags.GenerateUnitOfWork)
@@ -238,7 +192,7 @@ namespace Scaffolddd.Core
 
                 template = UnitOfWorkTemplate.MakeTemplate(_conf,tab);
 
-                WriteFile(template,pathFile);
+                FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
             }
 
             #endregion
@@ -255,7 +209,7 @@ namespace Scaffolddd.Core
 
                     // Gravar arquivo...
                     //File.WriteAllText(pathFile,template);
-                    WriteFile(template,pathFile);
+                    FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
                 //}
             }
 
@@ -269,7 +223,7 @@ namespace Scaffolddd.Core
 
                     // Gravar arquivo...
                     //File.WriteAllText(pathFile,template);
-                    WriteFile(template,pathFile);
+                    FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
                 //}
             }
 
