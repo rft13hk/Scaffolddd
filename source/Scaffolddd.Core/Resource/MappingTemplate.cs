@@ -31,7 +31,7 @@ namespace Scaffolddd.Core.Resource
             sb.AppendLine();
             foreach (var item in _dicSwapDto)
             {
-                sb.AppendLine(string.Concat(tab,tab,tab, string.Concat("CreateMap<", item.Key,", ",item.Value,">().ReverseMap();" )));
+                sb.AppendLine(string.Concat(tab,tab,tab, string.Concat("CreateMap<", item.Key,"Entity, ",item.Value,">().ReverseMap();" )));
             }
             sb.AppendLine();
 

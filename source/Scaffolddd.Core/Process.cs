@@ -55,20 +55,7 @@ namespace Scaffolddd.Core
 
         private void WriteFile(string text, string pathFileDest, string pathFileSource = null)
         {
-            // if (!string.IsNullOrEmpty(pathFileSource))
-            // {
-            //     var fileSourceExist = File.Exists(pathFileSource);
-
-            //     if (fileSourceExist)
-            //     {
-            //         var oldText = File.ReadAllText(pathFileSource);
-
-            //         if (CompareString(text, oldText))
-            //         {
-            //             return;
-            //         }
-            //     }
-            // }
+            #region Compare Old and New
 
             var fileExist = File.Exists(pathFileDest);
 
@@ -78,14 +65,18 @@ namespace Scaffolddd.Core
 
                 if (CompareString(text, oldText))
                 {
+                    //Is Equal then exit;
                     return;
                 }
             }
+            #endregion
 
+            var nowName = DateTime.Now.ToString("yyyyMMdd-HHmmss");
 
             if (_conf.BackupOld && fileExist && _conf.OverWrite)
             {
-                File.Copy(pathFileDest, string.Concat(pathFileDest,"_bk_",DateTime.Now.ToString("yyyyMMdd-HHmmss") ),true);
+                // Create Backup 
+                File.Copy(pathFileDest, string.Concat(pathFileDest,"_Old_", nowName ),true);
             }
 
             if (fileExist && _conf.OverWrite)
@@ -96,6 +87,10 @@ namespace Scaffolddd.Core
             if (!File.Exists(pathFileDest))
             {
                 File.WriteAllText(pathFileDest,text);
+            }
+            else
+            {
+                File.WriteAllText(string.Concat(pathFileDest,"_New_", nowName ),text);
             }
         }
 
