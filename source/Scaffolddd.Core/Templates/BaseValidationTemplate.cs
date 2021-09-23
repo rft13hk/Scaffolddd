@@ -11,12 +11,16 @@ namespace Scaffolddd.Core.Templates
 
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine(string.Concat("using ", conf.Domain.Paths.Interface.Validations, ";"));
+            sb.AppendLine(string.Concat("using ", conf.Domain.NameSpace,".Interfaces.Validations", ";"));
             sb.AppendLine();
-            sb.AppendLine(string.Concat("namespace ", conf.Domain.Paths.Implementation.Validations));
+            sb.AppendLine(string.Concat("namespace ", conf.Domain.NameSpace, ".Validations"));
             sb.AppendLine(@"{");
             sb.AppendLine(string.Concat(tab, "public abstract class BaseValidation<Entity>: IBaseValidation<Entity>"));
             sb.AppendLine(string.Concat(tab, "{"));
+
+                sb.AppendLine(string.Concat(tab,tab, "protected List<string> lstErros = new List<string>();"));
+                sb.AppendLine();
+
 
                 sb.AppendLine(string.Concat(tab,tab, "public IEnumerable<string> GetErros()"));
                 sb.AppendLine(string.Concat(tab,tab, "{"));

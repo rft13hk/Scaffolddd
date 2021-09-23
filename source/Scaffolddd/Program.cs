@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define TestPathx
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -32,7 +33,7 @@ namespace Scaffolddd
 
             var confTemplate = new ScaffoldddModel();
 
-            confTemplate.ProjectName = "Name of your Project";
+            confTemplate.ProjectName = "ProjecName";
             confTemplate.BackupOld = true;
             confTemplate.OverWrite = false;
             //-----------------------------------------------------------------------------------------------
@@ -58,31 +59,32 @@ namespace Scaffolddd
             confTemplate.Flags.GenerateBaseValidation = true;
             confTemplate.Flags.GenerateValidaions = true;
             //-----------------------------------------------------------------------------------------------
-            confTemplate.InfraStructure.NameSpace = "Namespace of project infrastructure";
-            confTemplate.InfraStructure.NameDbContext = "Name of DbContext File";
-            confTemplate.InfraStructure.Paths.Project = @"path of project";
-            confTemplate.InfraStructure.Paths.DbContext =  @"Diretory of DbContexts";
-            confTemplate.InfraStructure.Paths.Models = @"Diretory of Models";
-            confTemplate.InfraStructure.Paths.Repositories = @"Diretory of Repositories";
+            confTemplate.InfraStructure.NameSpace =  String.Concat(confTemplate.ProjectName,".Infrastructure.Data");
+            confTemplate.InfraStructure.NameDbContext = String.Concat( confTemplate.ProjectName,"DtmSysAdminContext");
+            confTemplate.InfraStructure.PathRoot = @"path of project";
+            confTemplate.InfraStructure.DbContextPath =  @"Diretory of DbContexts";
+            confTemplate.InfraStructure.ModelsPath = @"Diretory of Models";
+            confTemplate.InfraStructure.RepositoriesPath = @"Diretory of Repositories";
             //-----------------------------------------------------------------------------------------------
             confTemplate.Domain.NameSpace = "Namespace of project Domain";
-            confTemplate.Domain.Paths.Project = @"Path of Project";
+            confTemplate.Domain.PathRoot = @"Path of Project";
 
-            confTemplate.Domain.Paths.Interface.Infrastructure = @"Path of interfaces the Infrastructure";
-            confTemplate.Domain.Paths.Interface.Repositories = @"Path of interfaces the IRepositories";
-            confTemplate.Domain.Paths.Interface.Services = @"Path of interfaces the IServices";
-            confTemplate.Domain.Paths.Interface.Validations = @"Path of interfaces the IValidations";
+            confTemplate.Domain.Interface_InfrastructurePath = @"Path Relative of interfaces the Infrastructure";
+            confTemplate.Domain.Interface_RepositoriesPath = @"Path Relative of interfaces the IRepositories";
+            confTemplate.Domain.Interface_ServicesPath = @"Path Relative of interfaces the IServices";
+            confTemplate.Domain.Interface_ValidationsPath = @"Path Relative of interfaces the IValidations";
 
-            confTemplate.Domain.Paths.Implementation.Entities = @"Path of Entities";
-            confTemplate.Domain.Paths.Implementation.Validations = @"Path of Validations";
-            confTemplate.Domain.Paths.Implementation.Services = @"Path of Services";
+
+            confTemplate.Domain.EntitiesPath = @"Path Relative of Entities";
+            confTemplate.Domain.ValidationsPath = @"Path Relative of Validations";
+            confTemplate.Domain.ServicesPath = @"Path Relative of Services";
 
             //-----------------------------------------------------------------------------------------------
             confTemplate.Application.NameSpace = "Namespace of project Application";
-            confTemplate.Application.Paths.Project = @"path of project";
-            confTemplate.Application.Paths.MappingProfile = @"Directory of MappingProfile";
-            confTemplate.Application.Paths.InjectionMapping = @"Directory of InjectionMapping";
-            confTemplate.Application.Paths.DTO = @"Directory of DTOs";
+            confTemplate.Application.PathRoot = @"path of project";
+            confTemplate.Application.MappingProfilePath = @"Directory of MappingProfile";
+            confTemplate.Application.InjectionMappingPath = @"Directory of InjectionMapping";
+            confTemplate.Application.DTOPath = @"Directory of DTOs";
 
             #endregion
 
@@ -108,9 +110,52 @@ namespace Scaffolddd
 
                 var conf = JsonSerializer.Deserialize<ScaffoldddModel>(text);
 
+
+#if TestPath
+                Console.WriteLine(new string('-',80));
+                Console.WriteLine("Path Application:");
+                Console.WriteLine(conf.Application.PathRoot);
+                Console.WriteLine(conf.Application.InjectionMappingFullPath());
+                Console.WriteLine(conf.Application.MappingProfileFullPath());
+                Console.WriteLine(conf.Application.DTOFullPath());
+                Console.WriteLine(conf.Application.NameSpace);
+
+
+                
+                Console.WriteLine(new string('-',80));
+                Console.WriteLine("Path Domain:");
+                Console.WriteLine(conf.Domain.PathRoot);
+                Console.WriteLine(conf.Domain.EntitiesFullPath());
+                Console.WriteLine(conf.Domain.ValidationsPathFullPath());
+                Console.WriteLine(conf.Domain.ServicesPathFullPath());
+                Console.WriteLine(conf.Domain.HelpersPathFullPath());
+
+                Console.WriteLine("-->>");
+                Console.WriteLine(conf.Domain.InterfaceFullPath());
+                Console.WriteLine(conf.Domain.Interface_InfrastructureFullPath());
+                Console.WriteLine(conf.Domain.Interface_RepositoriesFullPath());
+                Console.WriteLine(conf.Domain.Interface_ServicesFullPath());
+                Console.WriteLine(conf.Domain.Interface_ValidationsFullPath());
+
+                Console.WriteLine("<<--");
+
+                Console.WriteLine(new string('-',80));
+                Console.WriteLine("Path Infrastructure:");
+                Console.WriteLine(conf.InfraStructure.PathRoot);
+                Console.WriteLine(conf.InfraStructure.DbContextFullPath());
+                Console.WriteLine(conf.InfraStructure.ModelsFullPath());
+                Console.WriteLine(conf.InfraStructure.RepositoriesFullPath());
+
+
+                Console.WriteLine(new string('-',80));
+
+
+#else
                 var processo = new Process(conf);
             
                 processo.Start();
+
+#endif
 
             }
 

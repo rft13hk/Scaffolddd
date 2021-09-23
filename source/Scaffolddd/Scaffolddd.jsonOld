@@ -31,12 +31,15 @@
         "HelpersPath": "/Helpers",
         "ServicesPath": "/Services",
         "ValidationsPath": "/Validations",
-        "InterfacePath": "/Interfaces",
-        "Interface_InfrastructurePath": "/Infrastructure",
-        "Interface_RepositoriesPath": "/Repositories",
-        "Interface_ServicesPath": "/Services",
-        "Interface_ValidationsPath": "/Validations",
-        "NameSpace": "DtmSysAdmin.Domain",
+        "Interface": {
+            "Infrastructure": "/Infrastructure",
+            "Repositories": "/Repositories",
+            "Services": "/Services",
+            "Validations": "/Validations",
+            "NameSpace": null,
+            "PathRoot": null
+        },
+        "NameSpace": "DtmSysAdmin.Domain.Data",
         "PathRoot": "/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain"
     },
     "InfraStructure": {

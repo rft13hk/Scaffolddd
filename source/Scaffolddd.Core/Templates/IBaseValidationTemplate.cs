@@ -12,7 +12,7 @@ namespace Scaffolddd.Core.Templates
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine();
             
-            sb.AppendLine(string.Concat("namespace ", conf.Domain.Paths.Interface.Validations));
+            sb.AppendLine(string.Concat("namespace ", conf.Domain.NameSpace,".Interfaces.Validations"));
             sb.AppendLine(@"{");
 
             sb.AppendLine(string.Concat(tab, "public interface IBaseValidation<TEntity>"));
