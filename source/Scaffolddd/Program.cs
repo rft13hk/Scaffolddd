@@ -32,7 +32,7 @@ namespace Scaffolddd
 
             var confTemplate = new ScaffoldddModel();
 
-            confTemplate.ProjectName = "<Name of your Project>";
+            confTemplate.ProjectName = "Name of your Project";
             confTemplate.BackupOld = true;
             confTemplate.OverWrite = false;
             //-----------------------------------------------------------------------------------------------
@@ -58,31 +58,31 @@ namespace Scaffolddd
             confTemplate.Flags.GenerateBaseValidation = true;
             confTemplate.Flags.GenerateValidaions = true;
             //-----------------------------------------------------------------------------------------------
-            confTemplate.InfraStructure.NameSpace = "<Namespace of project infrastructure>";
-            confTemplate.InfraStructure.NameDbContext = "<Name of DbContext File>";
-            confTemplate.InfraStructure.Paths.Project = @"<path of project>";
-            confTemplate.InfraStructure.Paths.DbContext =  @"<Diretory of DbContexts>";
-            confTemplate.InfraStructure.Paths.Models = @"<Diretory of Models>";
-            confTemplate.InfraStructure.Paths.Repositories = @"<Diretory of Repositories>";
+            confTemplate.InfraStructure.NameSpace = "Namespace of project infrastructure";
+            confTemplate.InfraStructure.NameDbContext = "Name of DbContext File";
+            confTemplate.InfraStructure.Paths.Project = @"path of project";
+            confTemplate.InfraStructure.Paths.DbContext =  @"Diretory of DbContexts";
+            confTemplate.InfraStructure.Paths.Models = @"Diretory of Models";
+            confTemplate.InfraStructure.Paths.Repositories = @"Diretory of Repositories";
             //-----------------------------------------------------------------------------------------------
-            confTemplate.Domain.NameSpace = "<Namespace of project Domain>";
-            confTemplate.Domain.Paths.Project = @"<Path of Project>";
+            confTemplate.Domain.NameSpace = "Namespace of project Domain";
+            confTemplate.Domain.Paths.Project = @"Path of Project";
 
-            confTemplate.Domain.Paths.Interface.Infrastructure = @"<Path of interfaces the Infrastructure>";
-            confTemplate.Domain.Paths.Interface.Repositories = @"<Path of interfaces the IRepositories>";
-            confTemplate.Domain.Paths.Interface.Services = @"<Path of interfaces the IServices>";
-            confTemplate.Domain.Paths.Interface.Validations = @"<Path of interfaces the IValidations>";
+            confTemplate.Domain.Paths.Interface.Infrastructure = @"Path of interfaces the Infrastructure";
+            confTemplate.Domain.Paths.Interface.Repositories = @"Path of interfaces the IRepositories";
+            confTemplate.Domain.Paths.Interface.Services = @"Path of interfaces the IServices";
+            confTemplate.Domain.Paths.Interface.Validations = @"Path of interfaces the IValidations";
 
-            confTemplate.Domain.Paths.Implementation.Entities = @"<Path of Entities>";
-            confTemplate.Domain.Paths.Implementation.Validations = @"<Path of Validations>";
-            confTemplate.Domain.Paths.Implementation.Services = @"<Path of Services>";
+            confTemplate.Domain.Paths.Implementation.Entities = @"Path of Entities";
+            confTemplate.Domain.Paths.Implementation.Validations = @"Path of Validations";
+            confTemplate.Domain.Paths.Implementation.Services = @"Path of Services";
 
             //-----------------------------------------------------------------------------------------------
-            confTemplate.Application.NameSpace = "<Namespace of project Application>";
-            confTemplate.Application.Paths.Project = @"<path of project>";
-            confTemplate.Application.Paths.MappingProfile = @"<Directory of MappingProfile";
-            confTemplate.Application.Paths.InjectionMapping = @"<Directory of InjectionMapping>";
-            confTemplate.Application.Paths.DTO = @"<Directory of DTOs>";
+            confTemplate.Application.NameSpace = "Namespace of project Application";
+            confTemplate.Application.Paths.Project = @"path of project";
+            confTemplate.Application.Paths.MappingProfile = @"Directory of MappingProfile";
+            confTemplate.Application.Paths.InjectionMapping = @"Directory of InjectionMapping";
+            confTemplate.Application.Paths.DTO = @"Directory of DTOs";
 
             #endregion
 
