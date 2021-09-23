@@ -1,1 +1,64 @@
-{"ProjectName":"\u003CName of your Project\u003E","OverWrite":false,"BackupOld":true,"Flags":{"GenerateIUnitOfWork":true,"GenerateUnitOfWork":true,"GenerateIBaseRepository":true,"GenerateBaseRepository":true,"GenerateEntities":true,"GenerateRepositoryInterfaces":true,"GenerateRepositories":true,"GenerateIBaseService":true,"GenerateBaseService":true,"GenerateDTOs":true,"GenerateMappings":true,"GenerateDependencyInjection":true,"GenerateIBaseValidation":true,"GenerateBaseValidation":true,"GenerateValidaions":true},"Application":{"Paths":{"MappingProfile":"\u003CDirectory of MappingProfile","InjectionMapping":"\u003CDirectory of InjectionMapping\u003E","DTO":"\u003CDirectory of DTOs\u003E","Project":"\u003Cpath of project\u003E"},"NameSpace":"\u003CNamespace of project Application\u003E","Project":null},"Domain":{"Paths":{"Implementation":{"Entities":"\u003CPath of Entities\u003E","Helpers":null,"Services":"\u003CPath of Services\u003E","Validations":"\u003CPath of Validations\u003E","Project":null},"Interface":{"Infrastructure":"\u003CPath of interfaces the Infrastructure\u003E","Repositories":"\u003CPath of interfaces the IRepositories\u003E","Services":"\u003CPath of interfaces the IServices\u003E","Validations":"\u003CPath of interfaces the IValidations\u003E","Project":null},"Project":"\u003CPath of Project\u003E"},"NameSpace":"\u003CNamespace of project Domain\u003E","Project":null},"InfraStructure":{"NameDbContext":"\u003CName of DbContext File\u003E","Paths":{"Models":"\u003CDiretory of Models\u003E","DbContext":"\u003CDiretory of DbContexts\u003E","Repositories":"\u003CDiretory of Repositories\u003E","Project":"\u003Cpath of project\u003E"},"NameSpace":"\u003CNamespace of project infrastructure\u003E","Project":null}}
+{
+    "ProjectName": "DtmSysAdmin",
+    "OverWrite": false,
+    "BackupOld": true,
+    "Flags": {
+        "GenerateIUnitOfWork": true,
+        "GenerateUnitOfWork": true,
+        "GenerateIBaseRepository": true,
+        "GenerateBaseRepository": true,
+        "GenerateEntities": true,
+        "GenerateRepositoryInterfaces": true,
+        "GenerateRepositories": true,
+        "GenerateIBaseService": true,
+        "GenerateBaseService": true,
+        "GenerateDTOs": true,
+        "GenerateMappings": true,
+        "GenerateDependencyInjection": true,
+        "GenerateIBaseValidation": true,
+        "GenerateBaseValidation": true,
+        "GenerateValidaions": true
+    },
+    "Application": {
+        "Paths": {
+            "MappingProfile": "/Implementation",
+            "InjectionMapping": "/Implementation",
+            "DTO": "/DTOs",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi"
+        },
+        "NameSpace": "DtmSysAdmin.WebApi",
+        "Project": null
+    },
+    "Domain": {
+        "Paths": {
+            "Implementation": {
+                "Entities": "/Entities",
+                "Helpers": "/Helpers",
+                "Services": "/Services",
+                "Validations": "/Validations",
+                "Project": null
+            },
+            "Interface": {
+                "Infrastructure": "/Interfaces/Infrastructure",
+                "Repositories": "/Interfaces/Repositories",
+                "Services": "/Interfaces/Services",
+                "Validations": "/Interfaces/Validations",
+                "Project": null
+            },
+            "Project": "\u003CPath of Project\u003E"
+        },
+        "NameSpace": "DtmSysAdmin.Domain",
+        "Project": null
+    },
+    "InfraStructure": {
+        "NameDbContext": "DtmSysAdminContext",
+        "Paths": {
+            "Models": "/Models",
+            "DbContext": "/DbContexts",
+            "Repositories": "/Repositories",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data"
+        },
+        "NameSpace": "DtmSysAdmin.Infrastructure.Data",
+        "Project": null
+    }
+}
