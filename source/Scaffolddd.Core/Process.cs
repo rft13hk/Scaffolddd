@@ -127,10 +127,18 @@ namespace Scaffolddd.Core
                 var pathFile = string.Concat(_conf.InfraStructure.GetPath(_conf.InfraStructure.RepositoriesPath), "/", item,"Repository.cs"); 
 
                 FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
-                // if (!File.Exists(pathFile))
-                // {
-                //     File.WriteAllText(pathFile,newtext);
-                // }
+            }
+        }
+
+        private void ProcessValidation(bool onlyNotFound)
+        {
+            foreach (var item in _lstNameModels)
+            {
+                var readText = ValidationsTemplate.MakeTemplate(_conf,tab,item);
+
+                var pathFile = string.Concat(_conf.Domain.ValidationsPathFullPath(), "/", item,"Validation.cs"); 
+
+                FileUtils.WriteFile(readText,pathFile, _conf.OverWrite, _conf.BackupOld);
             }
         }
 
@@ -284,6 +292,12 @@ namespace Scaffolddd.Core
             if (_conf.Flags.GenerateDependencyInjection)
             {
                 //ProcessDependencyInjectionMapping(!_conf.OverWrite);
+            }
+
+            //Passo 8 - Criar as Validations
+            if (_conf.Flags.GenerateValidaions)
+            {
+                ProcessValidation(!_conf.OverWrite);
             }
         }
 
