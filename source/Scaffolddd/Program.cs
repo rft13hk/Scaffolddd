@@ -13,8 +13,16 @@ namespace Scaffolddd
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("");
+            Console.WriteLine("SCAFFOLDdd - Maker DDD Projects for .NET CORE 5 or >");
+            Console.WriteLine("========== = ===== === ======== === ==== ==== = == =");
+            Console.WriteLine("");
+            Console.WriteLine("By Ronaldo Francisco Tolentino");
+            Console.WriteLine("Contact: rft13hk@outlook.com");
+            Console.WriteLine("");
             Console.WriteLine("Scaffolddd process starting...");
             Console.WriteLine();
+            
 
             string path = Directory.GetCurrentDirectory();
 
@@ -82,11 +90,19 @@ namespace Scaffolddd
 
             if (!File.Exists(configurationFile))
             {
+                Console.WriteLine("WARNING!!! - Configuration file not found... ");
+                Console.WriteLine("A new one was created in the execution directory of this program");
+                Console.WriteLine("");
+                Console.WriteLine("[Scaffolddd.json]");
+                Console.WriteLine("");
+                Console.WriteLine("Make changes to the file and run this program again.");
+                Console.WriteLine("");
+
+
                 string json = JsonSerializer.Serialize(confTemplate);
                 File.WriteAllText(configurationFile, json);
             }
-
-            if (File.Exists(configurationFile))
+            else
             {
                 var text = File.ReadAllText(configurationFile);
 

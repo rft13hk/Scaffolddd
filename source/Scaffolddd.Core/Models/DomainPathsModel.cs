@@ -5,5 +5,11 @@ namespace Scaffolddd.Core.Models
         public DomainPathsImplementationModel Implementation { get; set; }
         public DomainPathsInterfacesModel Interface { get; set; }
 
+        public DomainPathsModel()
+        {
+            Implementation = new DomainPathsImplementationModel();
+            Interface = new DomainPathsInterfacesModel();
+        }
+
     }
 }

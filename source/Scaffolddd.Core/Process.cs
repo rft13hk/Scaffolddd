@@ -226,7 +226,7 @@ namespace Scaffolddd.Core
 
             #region IBaseValidation, BaseValidation
 
-            if (_conf.Flags.GenerateIBaseRepository)
+            if (_conf.Flags.GenerateIBaseValidation)
             {
                 pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Interface.Validations), "/IBaseValidation.cs"); 
 
@@ -235,16 +235,14 @@ namespace Scaffolddd.Core
                 FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
             }
 
-            if (_conf.Flags.GenerateBaseRepository)
+            if (_conf.Flags.GenerateBaseValidation)
             {
                 pathFile = string.Concat(_conf.Domain.Paths.GetPath( _conf.Domain.Paths.Implementation.Validations), "/BaseValidation.cs"); 
 
-                template = IBaseValidationTemplate.MakeTemplate(_conf,tab);
+                template = BaseValidationTemplate.MakeTemplate(_conf,tab);
 
                 FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
             }
-
-
 
             #endregion
 

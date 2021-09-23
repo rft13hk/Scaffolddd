@@ -1,0 +1,51 @@
+{
+    "ProjectName": "DtmSysAdmin",
+    "OverWrite": false,
+    "BackupOld": true,
+    "Flags": {
+        "GenerateIUnitOfWork": true,
+        "GenerateUnitOfWork": true,
+        "GenerateIBaseRepository": true,
+        "GenerateBaseRepository": true,
+        "GenerateEntities": true,
+        "GenerateRepositoryInterfaces": true,
+        "GenerateRepositories": true,
+        "GenerateIBaseService": true,
+        "GenerateBaseService": true,
+        "GenerateDTOs": true,
+        "GenerateMappings": true,
+        "GenerateDependencyInjection": true,
+        "GenerateIBaseValidation": true,
+        "GenerateBaseValidation": true,
+        "GenerateValidaions": true
+    },    
+    "Application": {
+        "Paths": {
+            "MappingProfile": "/Implementation",
+            "InjectionMapping": "/Implementation",
+            "DTO": "/DTOs",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi"
+        },
+        "NameSpace": "DtmSysAdmin.WebApi"
+    },
+    "Domain": {
+        "Paths": {
+            "Entities": "/Entities",
+            "Infrastructure": "/Interfaces/Infrastructure",
+            "Repositories": "/Interfaces/Repositories",
+            "Services": "/Interfaces/Services",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain"
+        },
+        "NameSpace": "DtmSysAdmin.Domain"
+    },
+    "InfraStructure": {
+        "NameDbContext": "DtmSysAdminContext",
+        "Paths": {
+            "Models": "/Models",
+            "DbContext": "/DbContexts",
+            "Repositories": "/Repositories",
+            "Project": "/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data"
+        },
+        "NameSpace": "DtmSysAdmin.Infrastructure.Data"
+    }
+}
