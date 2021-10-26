@@ -13,10 +13,8 @@ namespace Scaffolddd.Core
         const string tab= "    ";
 
         private ScaffoldddModel _conf;
-
         private List<string> _lstFilesModels;
         private List<string> _lstNameModels;
-
         private Dictionary<string,string> _dicSwapEntity;
         private Dictionary<string,string> _dicSwapDto;
         private Dictionary<string,string> _dicSwapRepository;
@@ -24,7 +22,6 @@ namespace Scaffolddd.Core
         public Process(ScaffoldddModel conf)
         {
             _conf = conf;
-        
         }
 
         private void LoadFiles()
@@ -32,7 +29,6 @@ namespace Scaffolddd.Core
             _lstFilesModels = FileUtils.ProcessDirectory(_conf.InfraStructure.GetPath(_conf.InfraStructure.ModelsPath));
             _lstNameModels = new List<string>();
             _lstFilesModels.ForEach( f => _lstNameModels.Add(FileUtils.ExtractNameFromPath(f).Replace(".cs","")));
-
         }
 
 
@@ -89,12 +85,7 @@ namespace Scaffolddd.Core
                     var pathFile = string.Concat(_conf.Application.GetPath(_conf.Application.DTOPath), "/", dto,"Dto.cs"); 
 
                     FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
-                    // if (!File.Exists(pathFile))
-                    // {
-                    //     File.WriteAllText(pathFile,newtext);
-                    // }
                 }
-                
             }
         }
 
@@ -109,10 +100,6 @@ namespace Scaffolddd.Core
                 var pathFile = string.Concat(_conf.Domain.Interface_RepositoriesFullPath(), "/I", item,"Repository.cs"); 
 
                 FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
-                // if (!File.Exists(pathFile))
-                // {
-                //     File.WriteAllText(pathFile,newtext);
-                // }
             }
         }
 
@@ -149,28 +136,15 @@ namespace Scaffolddd.Core
             var pathFile = string.Concat(_conf.Application.GetPath(_conf.Application.MappingProfilePath),"/MappingProfile.cs");
 
             FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
-            // if (!File.Exists(pathFile))
-            // {
-            //     File.WriteAllText(pathFile,newtext);
-            // }
-
-
         }
 
         private void ProcessDependencyInjectionMapping(bool onlyNotFound)
         {
-
             var newtext = DependencyInjectionMappingTemplate.MakeTemplate(_conf,tab,_dicSwapDto, _dicSwapEntity);
 
             var pathFile = string.Concat(_conf.Application.GetPath(_conf.Application.MappingProfilePath),"/MappingProfile.cs");
 
             FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
-
-            // if (!File.Exists(pathFile))
-            // {
-            //     File.WriteAllText(pathFile,newtext);
-            // }
-
         }
 
         public void Start()
@@ -211,14 +185,9 @@ namespace Scaffolddd.Core
             {
                 pathFile = string.Concat(_conf.Domain.Interface_RepositoriesFullPath(), "/IBaseRepository.cs"); 
 
-                //if (!File.Exists(pathFile))
-                //{
-                    template = IBaseRepositoryTemplate.MakeTemplate(_conf,tab);
+                template = IBaseRepositoryTemplate.MakeTemplate(_conf,tab);
 
-                    // Gravar arquivo...
-                    //File.WriteAllText(pathFile,template);
-                    FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
-                //}
+                FileUtils.WriteFile(template,pathFile, _conf.OverWrite, _conf.BackupOld);
             }
 
             if (_conf.Flags.GenerateBaseRepository)
@@ -300,7 +269,5 @@ namespace Scaffolddd.Core
                 ProcessValidation(!_conf.OverWrite);
             }
         }
-
-
     }
 }
