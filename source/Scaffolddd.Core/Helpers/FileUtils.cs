@@ -16,9 +16,12 @@ namespace Scaffolddd.Core.Helpers
         {
             List<string> files = new List<string>();
 
-            // Process the list of files found in the directory.
-            string[] fileEntries = Directory.GetFiles(targetDirectory);
-            foreach (string fileName in fileEntries) files.Add(fileName);
+            if (Directory.Exists(targetDirectory))
+            {
+                // Process the list of files found in the directory.
+                string[] fileEntries = Directory.GetFiles(targetDirectory);
+                foreach (string fileName in fileEntries) files.Add(fileName);
+            }
 
             return files;
         }

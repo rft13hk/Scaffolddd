@@ -1,0 +1,61 @@
+{
+    "ProjectName": "DtmOrganograma",
+    "OverWrite": false,
+    "BackupOld": true,
+    "Flags": {
+        "GenerateIUnitOfWork": true,
+        "GenerateUnitOfWork": true,
+        "GenerateIBaseRepository": true,
+        "GenerateBaseRepository": true,
+        "GenerateEntities": true,
+        "GenerateRepositoryInterfaces": true,
+        "GenerateRepositories": true,
+        "GenerateIBaseService": true,
+        "GenerateBaseService": true,
+        "GenerateDTOs": true,
+        "GenerateMappings": true,
+        "GenerateDependencyInjection": true,
+        "GenerateIBaseValidation": true,
+        "GenerateBaseValidation": true,
+        "GenerateValidaions": true
+    },
+    "Application": {
+        "Paths": {
+            "MappingProfile": "/Implementation",
+            "InjectionMapping": "/Implementation",
+            "DTO": "/DTOs",
+            "Project": "/home/ronaldo/GitLab/dtmorganograma/source/1-API/DtmOrganograma.WebApi"
+        },
+        "NameSpace": "DtmOrganograma.WebApi",
+        "Project": null
+    },
+    "Domain": {
+        "NameSpace": "Namespace of project Domain",
+        "Project": null,
+        "Paths": {
+            "Project": "/home/ronaldo/GitLab/dtmorganograma/source/2-Domain/DtmOrganograma.Domain",
+            "Entities": "/Entities",
+            "Helpers": "/Helpers",
+            "Services": "/Services",
+            "Validations": "/Validations",
+            "Interface": {
+                "Path":"/Interfaces",
+                "Infrastructure": "/Infrastructures",
+                "Repositories": "/Repositories",
+                "Services": "/Services",
+                "Validations": "/Validations"
+            }
+        }
+    },
+    "InfraStructure": {
+        "NameDbContext": "DtmOrganograma",
+        "Paths": {
+            "ModelsPath": "/Models",
+            "DbContextPath": "/DbContexts",
+            "RepositoriesPath": "/Repositories",
+            "Project": "/home/ronaldo/GitLab/dtmorganograma/source/3-Infrastructure/DtmOrganograma.Infrastructure.Data"
+        },
+        "NameSpace": "DtmOrganograma.Infrastructure.Data",
+        "Project": null
+    }
+}

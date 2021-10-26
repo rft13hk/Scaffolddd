@@ -33,10 +33,12 @@ namespace Scaffolddd
 
             var confTemplate = new ScaffoldddModel();
 
-            confTemplate.ProjectName = "ProjecName";
+            confTemplate.ProjectName = "[ProjecName]";
             confTemplate.BackupOld = true;
             confTemplate.OverWrite = false;
+
             //-----------------------------------------------------------------------------------------------
+            #region Project Structure Flags
             confTemplate.Flags.GenerateIUnitOfWork = true;
             confTemplate.Flags.GenerateUnitOfWork = true;
             
@@ -58,13 +60,18 @@ namespace Scaffolddd
             confTemplate.Flags.GenerateIBaseValidation = true;
             confTemplate.Flags.GenerateBaseValidation = true;
             confTemplate.Flags.GenerateValidaions = true;
+            #endregion
             //-----------------------------------------------------------------------------------------------
             confTemplate.InfraStructure.NameSpace =  String.Concat(confTemplate.ProjectName,".Infrastructure.Data");
+            
             confTemplate.InfraStructure.NameDbContext = String.Concat( confTemplate.ProjectName,"DtmSysAdminContext");
-            confTemplate.InfraStructure.PathRoot = @"path of project";
             confTemplate.InfraStructure.DbContextPath =  @"Diretory of DbContexts";
+            
+            confTemplate.InfraStructure.PathRoot = @"path of project";
+
             confTemplate.InfraStructure.ModelsPath = @"Diretory of Models";
             confTemplate.InfraStructure.RepositoriesPath = @"Diretory of Repositories";
+
             //-----------------------------------------------------------------------------------------------
             confTemplate.Domain.NameSpace = "Namespace of project Domain";
             confTemplate.Domain.PathRoot = @"Path of Project";
@@ -92,6 +99,9 @@ namespace Scaffolddd
 
             if (!File.Exists(configurationFile))
             {
+
+
+
                 Console.WriteLine("WARNING!!! - Configuration file not found... ");
                 Console.WriteLine("A new one was created in the execution directory of this program");
                 Console.WriteLine("");

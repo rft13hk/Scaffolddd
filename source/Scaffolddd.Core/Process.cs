@@ -59,7 +59,7 @@ namespace Scaffolddd.Core
 
                     var entity = Helpers.FileUtils.ExtractNameFromPath(item).Replace(".cs","");
 
-                    var pathFile = string.Concat(_conf.Domain.EntitiesPath, "/", entity,"Entity.cs"); 
+                    var pathFile = string.Concat( _conf.Domain.EntitiesFullPath(), "/", entity,"Entity.cs"); 
 
                     FileUtils.WriteFile(newtext,pathFile, _conf.OverWrite, _conf.BackupOld);
                 }
@@ -150,6 +150,12 @@ namespace Scaffolddd.Core
         public void Start()
         {
             LoadFiles();
+
+            if (_lstFilesModels.Count ==0 )
+            {
+                Console.WriteLine("No files found, Models is empty!");
+                return;
+            }
 
             GenerateSwapNames();
 

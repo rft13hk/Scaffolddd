@@ -1,20 +1,20 @@
 {
-    "ProjectName": "DtmSysAdmin",
+    "ProjectName": "DtmOrganograma",
     "OverWrite": false,
     "BackupOld": true,
     "Flags": {
-        "GenerateIUnitOfWork": false,
-        "GenerateUnitOfWork": false,
-        "GenerateIBaseRepository": false,
-        "GenerateBaseRepository": false,
-        "GenerateEntities": false,
-        "GenerateRepositoryInterfaces": false,
-        "GenerateRepositories": false,
-        "GenerateIBaseService": false,
-        "GenerateBaseService": false,
-        "GenerateDTOs": false,
-        "GenerateMappings": false,
-        "GenerateDependencyInjection": false,
+        "GenerateIUnitOfWork": true,
+        "GenerateUnitOfWork": true,
+        "GenerateIBaseRepository": true,
+        "GenerateBaseRepository": true,
+        "GenerateEntities": true,
+        "GenerateRepositoryInterfaces": true,
+        "GenerateRepositories": true,
+        "GenerateIBaseService": true,
+        "GenerateBaseService": true,
+        "GenerateDTOs": true,
+        "GenerateMappings": true,
+        "GenerateDependencyInjection": true,
         "GenerateIBaseValidation": true,
         "GenerateBaseValidation": true,
         "GenerateValidaions": true
@@ -23,8 +23,8 @@
         "MappingProfilePath": "/Implementation",
         "InjectionMappingPath": "/Implementation",
         "DTOPath": "/DTOs",
-        "NameSpace": "DtmSysAdmin.WebApi",
-        "PathRoot": "/home/ronaldo/GitLab/dtmsysadmin/source/1-API/DtmSysAdmin.WebApi"
+        "NameSpace": "DtmOrganograma.WebApi",
+        "PathRoot": "/home/ronaldo/GitLab/dtmorganograma/source/1-API/DtmOrganograma.WebApi"
     },
     "Domain": {
         "EntitiesPath": "/Entities",
@@ -32,19 +32,19 @@
         "ServicesPath": "/Services",
         "ValidationsPath": "/Validations",
         "InterfacePath": "/Interfaces",
-        "Interface_InfrastructurePath": "/Infrastructure",
+        "Interface_InfrastructurePath": "/Infrastructures",
         "Interface_RepositoriesPath": "/Repositories",
         "Interface_ServicesPath": "/Services",
         "Interface_ValidationsPath": "/Validations",
-        "NameSpace": "DtmSysAdmin.Domain",
-        "PathRoot": "/home/ronaldo/GitLab/dtmsysadmin/source/2-Domain/DtmSysAdmin.Domain"
+        "NameSpace": "DtmOrganograma.Domain",
+        "PathRoot": "/home/ronaldo/GitLab/dtmorganograma/source/2-Domain/DtmOrganograma.Domain"
     },
     "InfraStructure": {
-        "NameDbContext": "DtmSysAdminContext",
+        "NameDbContext": "DtmOrganogramaContext",
         "ModelsPath": "/Models",
         "DbContextPath": "/DbContexts",
         "RepositoriesPath": "/Repositories",
-        "NameSpace": "DtmSysAdmin.Infrastructure.Data",
-        "PathRoot": "/home/ronaldo/GitLab/dtmsysadmin/source/3-Infrastructure/DtmSysAdmin.Infrastructure.Data"
+        "NameSpace": "DtmOrganograma.Infrastructure.Data",
+        "PathRoot": "/home/ronaldo/GitLab/dtmorganograma/source/3-Infrastructure/DtmOrganograma.Infrastructure.Data"
     }
 }
